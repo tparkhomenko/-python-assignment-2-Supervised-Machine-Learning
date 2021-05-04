@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <meta name="mobile-web-app-capable" content="yes">
+    <title>
+        Assignment 2: Supervised Machine Learning (Classification) and Technical Report | 25 Points - HackMD
+    </title>
+    <link rel="icon" type="image/png" href="https://hackmd.io/favicon.png">
+    <link rel="apple-touch-icon" href="https://hackmd.io/apple-touch-icon.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha256-916EbMg70RQy9LHiGkXzG8hSg9EdNy97GazNG/aiY1w=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css" integrity="sha256-3iu9jgsy9TpTwXKb7bNQzqWekRX7pPK+2OLj3R922fo=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/3.5.0/octicons.min.css" integrity="sha256-QiWfLIsCT02Sdwkogf6YMiQlj4NE84MKkzEMkZnMGdg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.5.1/themes/prism.min.css" integrity="sha256-vtR0hSWRc3Tb26iuN2oZHt3KRUomwTufNIf5/4oeCyg=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@hackmd/emojify.js@2.1.0/dist/css/basic/emojify.min.css" integrity="sha256-UOrvMOsSDSrW6szVLe8ZDZezBxh5IoIfgTwdNDgTjiU=" crossorigin="anonymous" />
+    <style>
+        @charset "UTF-8";@import url(https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,500,500i|Source+Code+Pro:300,400,500|Source+Sans+Pro:300,300i,400,400i,600,600i|Source+Serif+Pro&subset=latin-ext);.hljs{display:block;background:#fff;padding:.5em;color:#333;overflow-x:auto}.hljs-comment,.hljs-meta{color:#969896}.hljs-emphasis,.hljs-quote,.hljs-string,.hljs-strong,.hljs-template-variable,.hljs-variable{color:#df5000}.hljs-keyword,.hljs-selector-tag,.hljs-type{color:#a71d5d}.hljs-attribute,.hljs-bullet,.hljs-literal,.hljs-number,.hljs-symbol{color:#0086b3}.hljs-built_in,.hljs-builtin-name{color:#005cc5}.hljs-name,.hljs-section{color:#63a35c}.hljs-tag{color:#333}.hljs-attr,.hljs-selector-attr,.hljs-selector-class,.hljs-selector-id,.hljs-selector-pseudo,.hljs-title{color:#795da3}.hljs-addition{color:#55a532;background-color:#eaffea}.hljs-deletion{color:#bd2c00;background-color:#ffecec}.hljs-link{text-decoration:underline}.markdown-body{font-size:16px;line-height:1.5;word-wrap:break-word}.markdown-body:after,.markdown-body:before{display:table;content:""}.markdown-body:after{clear:both}.markdown-body>:first-child{margin-top:0!important}.markdown-body>:last-child{margin-bottom:0!important}.markdown-body a:not([href]){color:inherit;text-decoration:none}.markdown-body .absent{color:#c00}.markdown-body .anchor{float:left;padding-right:4px;margin-left:-20px;line-height:1}.markdown-body .anchor:focus{outline:none}.markdown-body blockquote,.markdown-body dl,.markdown-body ol,.markdown-body p,.markdown-body pre,.markdown-body table,.markdown-body ul{margin-top:0;margin-bottom:16px}.markdown-body hr{height:.25em;padding:0;margin:24px 0;background-color:#e7e7e7;border:0}.markdown-body blockquote{font-size:16px;padding:0 1em;color:#777;border-left:.25em solid #ddd}.markdown-body blockquote>:first-child{margin-top:0}.markdown-body blockquote>:last-child{margin-bottom:0}.markdown-body kbd,.popover kbd{display:inline-block;padding:3px 5px;font-size:11px;line-height:10px;color:#555;vertical-align:middle;background-color:#fcfcfc;border:1px solid #ccc;border-bottom-color:#bbb;border-radius:3px;box-shadow:inset 0 -1px 0 #bbb}.markdown-body .loweralpha{list-style-type:lower-alpha}.markdown-body h1,.markdown-body h2,.markdown-body h3,.markdown-body h4,.markdown-body h5,.markdown-body h6{margin-top:24px;margin-bottom:16px;font-weight:600;line-height:1.25}.markdown-body h1 .octicon-link,.markdown-body h2 .octicon-link,.markdown-body h3 .octicon-link,.markdown-body h4 .octicon-link,.markdown-body h5 .octicon-link,.markdown-body h6 .octicon-link{color:#000;vertical-align:middle;visibility:hidden}.markdown-body h1:hover .anchor,.markdown-body h2:hover .anchor,.markdown-body h3:hover .anchor,.markdown-body h4:hover .anchor,.markdown-body h5:hover .anchor,.markdown-body h6:hover .anchor{text-decoration:none}.markdown-body h1:hover .anchor .octicon-link,.markdown-body h2:hover .anchor .octicon-link,.markdown-body h3:hover .anchor .octicon-link,.markdown-body h4:hover .anchor .octicon-link,.markdown-body h5:hover .anchor .octicon-link,.markdown-body h6:hover .anchor .octicon-link{visibility:visible}.markdown-body h1 code,.markdown-body h1 tt,.markdown-body h2 code,.markdown-body h2 tt,.markdown-body h3 code,.markdown-body h3 tt,.markdown-body h4 code,.markdown-body h4 tt,.markdown-body h5 code,.markdown-body h5 tt,.markdown-body h6 code,.markdown-body h6 tt{font-size:inherit}.markdown-body h1{font-size:2em}.markdown-body h1,.markdown-body h2{padding-bottom:.3em;border-bottom:1px solid #eee}.markdown-body h2{font-size:1.5em}.markdown-body h3{font-size:1.25em}.markdown-body h4{font-size:1em}.markdown-body h5{font-size:.875em}.markdown-body h6{font-size:.85em;color:#777}.markdown-body ol,.markdown-body ul{padding-left:2em}.markdown-body ol.no-list,.markdown-body ul.no-list{padding:0;list-style-type:none}.markdown-body ol ol,.markdown-body ol ul,.markdown-body ul ol,.markdown-body ul ul{margin-top:0;margin-bottom:0}.markdown-body li>p{margin-top:16px}.markdown-body li+li{padding-top:.25em}.markdown-body dl{padding:0}.markdown-body dl dt{padding:0;margin-top:16px;font-size:1em;font-style:italic;font-weight:700}.markdown-body dl dd{padding:0 16px;margin-bottom:16px}.markdown-body table{display:block;width:100%;overflow:auto;word-break:normal;word-break:keep-all}.markdown-body table th{font-weight:700}.markdown-body table td,.markdown-body table th{padding:6px 13px;border:1px solid #ddd}.markdown-body table tr{background-color:#fff;border-top:1px solid #ccc}.markdown-body table tr:nth-child(2n){background-color:#f8f8f8}.markdown-body img{max-width:100%;box-sizing:content-box;background-color:#fff}.markdown-body img[align=right]{padding-left:20px}.markdown-body img[align=left]{padding-right:20px}.markdown-body .emoji{max-width:none;vertical-align:text-top;background-color:transparent}.markdown-body span.frame{display:block;overflow:hidden}.markdown-body span.frame>span{display:block;float:left;width:auto;padding:7px;margin:13px 0 0;overflow:hidden;border:1px solid #ddd}.markdown-body span.frame span img{display:block;float:left}.markdown-body span.frame span span{display:block;padding:5px 0 0;clear:both;color:#333}.markdown-body span.align-center{display:block;overflow:hidden;clear:both}.markdown-body span.align-center>span{display:block;margin:13px auto 0;overflow:hidden;text-align:center}.markdown-body span.align-center span img{margin:0 auto;text-align:center}.markdown-body span.align-right{display:block;overflow:hidden;clear:both}.markdown-body span.align-right>span{display:block;margin:13px 0 0;overflow:hidden;text-align:right}.markdown-body span.align-right span img{margin:0;text-align:right}.markdown-body span.float-left{display:block;float:left;margin-right:13px;overflow:hidden}.markdown-body span.float-left span{margin:13px 0 0}.markdown-body span.float-right{display:block;float:right;margin-left:13px;overflow:hidden}.markdown-body span.float-right>span{display:block;margin:13px auto 0;overflow:hidden;text-align:right}.markdown-body code,.markdown-body tt{padding:0;padding-top:.2em;padding-bottom:.2em;margin:0;font-size:85%;background-color:rgba(0,0,0,.04);border-radius:3px}.markdown-body code:after,.markdown-body code:before,.markdown-body tt:after,.markdown-body tt:before{letter-spacing:-.2em;content:"\00a0"}.markdown-body code br,.markdown-body tt br{display:none}.markdown-body del code{text-decoration:inherit}.markdown-body pre{word-wrap:normal}.markdown-body pre>code{padding:0;margin:0;font-size:100%;word-break:normal;white-space:pre;background:transparent;border:0}.markdown-body .highlight{margin-bottom:16px}.markdown-body .highlight pre{margin-bottom:0;word-break:normal}.markdown-body .highlight pre,.markdown-body pre{padding:16px;overflow:auto;font-size:85%;line-height:1.45;background-color:#f7f7f7;border-radius:3px}.markdown-body pre code,.markdown-body pre tt{display:inline;max-width:auto;padding:0;margin:0;overflow:visible;line-height:inherit;word-wrap:normal;background-color:transparent;border:0}.markdown-body pre code:after,.markdown-body pre code:before,.markdown-body pre tt:after,.markdown-body pre tt:before{content:normal}.markdown-body .csv-data td,.markdown-body .csv-data th{padding:5px;overflow:hidden;font-size:12px;line-height:1;text-align:left;white-space:nowrap}.markdown-body .csv-data .blob-line-num{padding:10px 8px 9px;text-align:right;background:#fff;border:0}.markdown-body .csv-data tr{border-top:0}.markdown-body .csv-data th{font-weight:700;background:#f8f8f8;border-top:0}.news .alert .markdown-body blockquote{padding:0 0 0 40px;border:0 none}.activity-tab .news .alert .commits,.activity-tab .news .markdown-body blockquote{padding-left:0}.task-list-item{list-style-type:none}.task-list-item label{font-weight:400}.task-list-item.enabled label{cursor:pointer}.task-list-item+.task-list-item{margin-top:3px}.task-list-item-checkbox{float:left;margin:.31em 0 .2em -1.3em!important;vertical-align:middle;cursor:default!important}.markdown-body{padding-top:40px;padding-bottom:40px;max-width:758px;overflow:visible!important;position:relative}.markdown-body .emoji{vertical-align:top}.markdown-body pre{border:inherit!important}.markdown-body code{color:inherit!important}.markdown-body pre code .wrapper{display:-moz-inline-flex;display:-ms-inline-flex;display:-o-inline-flex;display:inline-flex}.markdown-body pre code .gutter{float:left;overflow:hidden;-webkit-user-select:none;user-select:none}.markdown-body pre code .gutter.linenumber{text-align:right;position:relative;display:inline-block;cursor:default;z-index:4;padding:0 8px 0 0;min-width:20px;box-sizing:content-box;color:#afafaf!important;border-right:3px solid #6ce26c!important}.markdown-body pre code .gutter.linenumber>span:before{content:attr(data-linenumber)}.markdown-body pre code .code{float:left;margin:0 0 0 16px}.markdown-body .gist .line-numbers{border-left:none;border-top:none;border-bottom:none}.markdown-body .gist .line-data{border:none}.markdown-body .gist table{border-spacing:0;border-collapse:inherit!important}.markdown-body code[data-gist-id]{background:none;padding:0}.markdown-body code[data-gist-id]:after,.markdown-body code[data-gist-id]:before{content:""}.markdown-body code[data-gist-id] .blob-num{border:unset}.markdown-body code[data-gist-id] table{overflow:unset;margin-bottom:unset}.markdown-body code[data-gist-id] table tr{background:unset}.markdown-body[dir=rtl] pre{direction:ltr}.markdown-body[dir=rtl] code{direction:ltr;unicode-bidi:embed}.markdown-body .alert>p{margin-bottom:0}.markdown-body pre.abc,.markdown-body pre.flow-chart,.markdown-body pre.graphviz,.markdown-body pre.mermaid,.markdown-body pre.sequence-diagram,.markdown-body pre.vega{text-align:center;background-color:inherit;border-radius:0;white-space:inherit;overflow:visible}.markdown-body pre.abc>code,.markdown-body pre.flow-chart>code,.markdown-body pre.graphviz>code,.markdown-body pre.mermaid>code,.markdown-body pre.sequence-diagram>code,.markdown-body pre.vega>code{text-align:left}.markdown-body pre.abc>svg,.markdown-body pre.flow-chart>svg,.markdown-body pre.graphviz>svg,.markdown-body pre.mermaid>svg,.markdown-body pre.sequence-diagram>svg,.markdown-body pre.vega>svg{max-width:100%;height:100%}.markdown-body pre>code.wrap{white-space:pre-wrap;white-space:-moz-pre-wrap;white-space:-pre-wrap;white-space:-o-pre-wrap;word-wrap:break-word}.markdown-body .alert>p,.markdown-body .alert>ul{margin-bottom:0}.markdown-body summary{display:list-item}.markdown-body summary:focus{outline:none}.markdown-body details summary{cursor:pointer}.markdown-body details:not([open])>:not(summary){display:none}.markdown-body figure{margin:1em 40px}.markdown-body .mark,.markdown-body mark{background-color:#fff1a7}.vimeo,.youtube{cursor:pointer;display:table;text-align:center;background-position:50%;background-repeat:no-repeat;background-size:contain;background-color:#000;overflow:hidden}.vimeo,.youtube{position:relative;width:100%}.youtube{padding-bottom:56.25%}.vimeo img{width:100%;object-fit:contain;z-index:0}.youtube img{object-fit:cover;z-index:0}.vimeo iframe,.youtube iframe,.youtube img{width:100%;height:100%;position:absolute;top:0;left:0}.vimeo iframe,.youtube iframe{vertical-align:middle;z-index:1}.vimeo .icon,.youtube .icon{position:absolute;height:auto;width:auto;top:50%;left:50%;transform:translate(-50%,-50%);color:#fff;opacity:.3;transition:opacity .2s;z-index:0}.vimeo:hover .icon,.youtube:hover .icon{opacity:.6;transition:opacity .2s}.slideshare .inner,.speakerdeck .inner{position:relative;width:100%}.slideshare .inner iframe,.speakerdeck .inner iframe{position:absolute;top:0;bottom:0;left:0;right:0;width:100%;height:100%}.MJX_Assistive_MathML{display:none}#MathJax_Message{z-index:1000!important}.ui-infobar{position:relative;z-index:2;max-width:760px;margin:25px auto -25px;color:#777}.toc .invisable-node{list-style-type:none}.ui-toc{position:fixed;bottom:20px;z-index:998}.ui-toc.both-mode{margin-left:8px}.ui-toc.both-mode .ui-toc-label{height:40px;padding:10px 4px;border-top-left-radius:0;border-bottom-left-radius:0}.ui-toc-label{background-color:#e6e6e6;border:none;color:#868686;transition:opacity .2s}.ui-toc .open .ui-toc-label{opacity:1;color:#fff;transition:opacity .2s}.ui-toc-label:focus{opacity:.3;background-color:#ccc;color:#000}.ui-toc-label:hover{opacity:1;background-color:#ccc;transition:opacity .2s}.ui-toc-dropdown{margin-top:20px;margin-bottom:20px;padding-left:10px;padding-right:10px;max-width:45vw;width:25vw;max-height:70vh;overflow:auto;text-align:inherit}.ui-toc-dropdown>.toc{max-height:calc(70vh - 100px);overflow:auto}.ui-toc-dropdown[dir=rtl] .nav{padding-right:0;letter-spacing:.0029em}.ui-toc-dropdown a{overflow:hidden;text-overflow:ellipsis;white-space:pre}.ui-toc-dropdown .nav>li>a{display:block;padding:4px 20px;font-size:13px;font-weight:500;color:#767676}.ui-toc-dropdown .nav>li:first-child:last-child > ul,.ui-toc-dropdown .toc.expand ul{display:block}.ui-toc-dropdown .nav>li>a:focus,.ui-toc-dropdown .nav>li>a:hover{padding-left:19px;color:#000;text-decoration:none;background-color:transparent;border-left:1px solid #000}.ui-toc-dropdown[dir=rtl] .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav>li>a:hover{padding-right:19px;border-left:none;border-right:1px solid #000}.ui-toc-dropdown .nav>.active:focus>a,.ui-toc-dropdown .nav>.active:hover>a,.ui-toc-dropdown .nav>.active>a{padding-left:18px;font-weight:700;color:#000;background-color:transparent;border-left:2px solid #000}.ui-toc-dropdown[dir=rtl] .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav>.active>a{padding-right:18px;border-left:none;border-right:2px solid #000}.ui-toc-dropdown .nav .nav{display:none;padding-bottom:10px}.ui-toc-dropdown .nav>.active>ul{display:block}.ui-toc-dropdown .nav .nav>li>a{padding-top:1px;padding-bottom:1px;padding-left:30px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a{padding-right:30px}.ui-toc-dropdown .nav .nav>li>ul>li>a{padding-top:1px;padding-bottom:1px;padding-left:40px;font-size:12px;font-weight:400}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a{padding-right:40px}.ui-toc-dropdown .nav .nav>li>a:focus,.ui-toc-dropdown .nav .nav>li>a:hover{padding-left:29px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>a:hover{padding-right:29px}.ui-toc-dropdown .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown .nav .nav>li>ul>li>a:hover{padding-left:39px}.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:focus,.ui-toc-dropdown[dir=rtl] .nav .nav>li>ul>li>a:hover{padding-right:39px}.ui-toc-dropdown .nav .nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>a{padding-left:28px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>a{padding-right:28px}.ui-toc-dropdown .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown .nav .nav>.active>.nav>.active>a{padding-left:38px;font-weight:500}.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:focus>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active:hover>a,.ui-toc-dropdown[dir=rtl] .nav .nav>.active>.nav>.active>a{padding-right:38px}.markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,sans-serif}html[lang^=ja] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .markdown-body{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html .markdown-body[lang^=ja]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html .markdown-body[lang=zh-tw]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html .markdown-body[lang=zh-cn]{font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Helvetica Neue,Helvetica,Roboto,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}html[lang^=ja] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html[lang=zh-tw] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html[lang=zh-cn] .ui-toc-dropdown{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}html .ui-toc-dropdown[lang^=ja]{font-family:Source Sans Pro,Helvetica,Arial,Meiryo UI,MS PGothic,ＭＳ\ Ｐゴシック,sans-serif}html .ui-toc-dropdown[lang=zh-tw]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft JhengHei UI,微軟正黑UI,sans-serif}html .ui-toc-dropdown[lang=zh-cn]{font-family:Source Sans Pro,Helvetica,Arial,Microsoft YaHei UI,微软雅黑UI,sans-serif}.ui-affix-toc{position:fixed;top:0;max-width:15vw;max-height:70vh;overflow:auto}.back-to-top,.expand-toggle,.go-to-bottom{display:block;padding:4px 10px;margin-top:10px;margin-left:10px;font-size:12px;font-weight:500;color:#999}.back-to-top:focus,.back-to-top:hover,.expand-toggle:focus,.expand-toggle:hover,.go-to-bottom:focus,.go-to-bottom:hover{color:#563d7c;text-decoration:none}.back-to-top,.go-to-bottom{margin-top:0}.ui-user-icon{width:20px;height:20px;display:block;border-radius:50%;margin-top:2px;margin-bottom:2px;margin-right:5px;background-position:50%;background-repeat:no-repeat;background-size:cover}.ui-user-icon.small{width:18px;height:18px;display:inline-block;vertical-align:middle;margin:0 0 .2em}.ui-infobar>small>span{line-height:22px}.ui-infobar>small .dropdown{display:inline-block}.ui-infobar>small .dropdown a:focus,.ui-infobar>small .dropdown a:hover{text-decoration:none}.ui-more-info{color:#888;cursor:pointer;vertical-align:middle}.ui-more-info .fa{font-size:16px}.ui-connectedGithub,.ui-published-note{color:#888}.ui-connectedGithub{line-height:23px;white-space:nowrap}.ui-connectedGithub a.file-path{color:#888;text-decoration:none;padding-left:22px}.ui-connectedGithub a.file-path:active,.ui-connectedGithub a.file-path:hover{color:#888;text-decoration:underline}.ui-connectedGithub .fa{font-size:20px}.ui-published-note .fa{font-size:20px;vertical-align:top}.unselectable{-webkit-user-select:none;-o-user-select:none;user-select:none}.selectable{-webkit-user-select:text;-o-user-select:text;user-select:text}@media print{blockquote,div,img,pre,table{page-break-inside:avoid!important}a[href]:after{font-size:12px!important}}.markdown-body.slides{position:relative;z-index:1;color:#222}.markdown-body.slides:before{content:"";display:block;position:absolute;top:0;left:0;right:0;bottom:0;z-index:-1;background-color:currentColor;box-shadow:0 0 0 50vw}.markdown-body.slides section[data-markdown]{position:relative;margin-bottom:1.5em;background-color:#fff;text-align:center}.markdown-body.slides section[data-markdown] code{text-align:left}.markdown-body.slides section[data-markdown]:before{content:"";display:block;padding-bottom:56.23%}.markdown-body.slides section[data-markdown]>div:first-child{position:absolute;top:50%;left:1em;right:1em;transform:translateY(-50%);max-height:100%;overflow:hidden}.markdown-body.slides section[data-markdown]>ul{display:inline-block}.markdown-body.slides>section>section+section:after{content:"";position:absolute;top:-1.5em;right:1em;height:1.5em;border:3px solid #777}.site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] .site-ui-font{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}body{font-smoothing:subpixel-antialiased!important;-webkit-font-smoothing:subpixel-antialiased!important;-moz-osx-font-smoothing:auto!important;text-shadow:0 0 1em transparent,1px 1px 1.2px rgba(0,0,0,.004);-webkit-overflow-scrolling:touch;letter-spacing:.025em;font-family:Source Sans Pro,Helvetica,Arial,sans-serif}html[lang^=ja] body{font-family:Source Sans Pro,Helvetica,Arial,Hiragino Kaku Gothic Pro,ヒラギノ角ゴ Pro W3,Osaka,Meiryo,メイリオ,MS Gothic,ＭＳ\ ゴシック,sans-serif}html[lang=zh-tw] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang TC,Microsoft JhengHei,微軟正黑,sans-serif}html[lang=zh-cn] body{font-family:Source Sans Pro,Helvetica,Arial,PingFang SC,Microsoft YaHei,微软雅黑,sans-serif}abbr[title]{border-bottom:none;text-decoration:underline;-webkit-text-decoration:underline dotted;text-decoration:underline dotted}abbr[data-original-title],abbr[title]{cursor:help}body.modal-open{overflow-y:auto;padding-right:0!important}
+    </style>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.min.js" integrity="sha256-3Jy/GbSLrg0o9y5Z5n1uw0qxZECH7C6OQpVBgNFYa0g=" crossorigin="anonymous"></script>
+    	<script src="https://cdnjs.cloudflare.com/ajax/libs/respond.js/1.4.2/respond.min.js" integrity="sha256-g6iAfvZp+nDQ2TdTR/VVKJf3bGro4ub5fvWSWVRi2NE=" crossorigin="anonymous"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/es5-shim/4.5.9/es5-shim.min.js" integrity="sha256-8E4Is26QH0bD52WoQpcB+R/tcWQtpzlCojrybUd7Mxo=" crossorigin="anonymous"></script>
+    <![endif]-->
+</head>
+
+<body>
+    <div id="doc" class="markdown-body container-fluid comment-enabled comment-inner" data-hard-breaks="true"><style>
+td {
+  font-size: 14px
+}
+th {
+  font-size: 14px
+}
+</style><h1 id="Assignment-2-Supervised-Machine-Learning-Classification-and-Technical-Report--25-Points" data-id="Assignment-2-Supervised-Machine-Learning-Classification-and-Technical-Report--25-Points"><a class="anchor hidden-xs" href="#Assignment-2-Supervised-Machine-Learning-Classification-and-Technical-Report--25-Points" title="Assignment-2-Supervised-Machine-Learning-Classification-and-Technical-Report--25-Points"><span class="octicon octicon-link"></span></a><span>Assignment 2: Supervised Machine Learning (Classification) and Technical Report | 25 Points</span></h1><h2 id="Introduction" data-id="Introduction"><a class="anchor hidden-xs" href="#Introduction" title="Introduction"><span class="octicon octicon-link"></span></a><span>Introduction</span></h2><p><span>The overall goal of Assignment 2 is twofold: (1) You will further practice object-oriented programming, and (2) you will have the opportunity to gain first experience with supervised machine learning.</span><br>
+<span>In this assignment, you will build on the code that you wrote in Assignment 1, adding functionality for supervised machine learning (specifically, for classification) to the system. You will then use your system to predict the target values (i.e., the presence or absence of a disease) of your chosen dataset and report your results in a technical report.</span></p><h2 id="General-Information" data-id="General-Information"><a class="anchor hidden-xs" href="#General-Information" title="General-Information"><span class="octicon octicon-link"></span></a><span>General Information</span></h2><h3 id="Deadlines" data-id="Deadlines"><a class="anchor hidden-xs" href="#Deadlines" title="Deadlines"><span class="octicon octicon-link"></span></a><span>Deadlines</span></h3><h4 id="Python-Files" data-id="Python-Files"><a class="anchor hidden-xs" href="#Python-Files" title="Python-Files"><span class="octicon octicon-link"></span></a><span>Python Files</span></h4><p><span>The deadline for submitting your Python code for this assignment is on </span><strong><span>Sunday May 30, 2021</span></strong><span> at </span><strong><span>23:59:00</span></strong><span>.</span></p><h4 id="Technical-Report" data-id="Technical-Report"><a class="anchor hidden-xs" href="#Technical-Report" title="Technical-Report"><span class="octicon octicon-link"></span></a><span>Technical Report</span></h4><p><span>The technical report has a separate deadline on </span><strong><span>Sunday June 6, 2021</span></strong><span> at </span><strong><span>23:59:00</span></strong><span> (one week after the deadline for submitting your Python code).</span></p><p><span>You will submit your assignment in the TeachCenter. Multiple submissions are allowed, so you can submit your files as often as you want. The last submission before the deadline will be graded; we have no access to previous versions.</span><br>
+<span>Both deadlines are hard deadlines; therefore, no late submissions will be accepted.</span></p><h3 id="Submission-Files" data-id="Submission-Files"><a class="anchor hidden-xs" href="#Submission-Files" title="Submission-Files"><span class="octicon octicon-link"></span></a><span>Submission Files</span></h3><h4 id="Python-Code" data-id="Python-Code"><a class="anchor hidden-xs" href="#Python-Code" title="Python-Code"><span class="octicon octicon-link"></span></a><span>Python Code</span></h4><p><span>When you have completed the Python code for the assignment, you will submit four files:</span></p><ol>
+<li><code>dataset.py</code><span>: This file contains the extended version of the </span><code>Dataset</code><span> class.</span></li>
+<li><code>data_predictor.py</code><span>: This file contains the class </span><code>DataPredictor</code><span>.</span></li>
+<li><code>evaluation_metrics.py</code><span>: This file contains the class </span><code>EvaluationMetrics</code><span>.</span></li>
+<li><code>knn.py</code><span>: This file contains the class </span><code>kNN</code><span>.</span></li>
+</ol><h4 id="Technical-Report1" data-id="Technical-Report"><a class="anchor hidden-xs" href="#Technical-Report1" title="Technical-Report1"><span class="octicon octicon-link"></span></a><span>Technical Report</span></h4><p><span>When you have completed your technical report, you will submit one file:</span></p><ol>
+<li><code>report_&lt;your_matriculation_number&gt;.pdf</code><span>: Your technical report. Include your matriculation number in the file name.</span></li>
+</ol><p><span>Do not submit any other files. Name the files </span><em><span>exactly</span></em><span> as listed above. Make sure you use Python version ≥3.8.</span></p><h3 id="Comment-Header" data-id="Comment-Header"><a class="anchor hidden-xs" href="#Comment-Header" title="Comment-Header"><span class="octicon octicon-link"></span></a><span>Comment Header</span></h3><p><span>Every submitted </span><code>.py</code><span> file must contain a comment header with the following information at its top:</span></p><pre><code class="python hljs"><span class="hljs-comment">################################################################################</span>
+<span class="hljs-comment"># Author:      Firstname Lastname</span>
+<span class="hljs-comment"># MatNr:       01234567</span>
+<span class="hljs-comment"># File:        &lt;file_name&gt;.py</span>
+<span class="hljs-comment"># Description: ... short description of the file ...</span>
+<span class="hljs-comment"># Comments:    ... comments for the tutors ...</span>
+<span class="hljs-comment">#              ... can be multiline ...</span>
+<span class="hljs-comment">################################################################################</span>
+</code></pre><h3 id="Coding-Standard-and-Code-Quality" data-id="Coding-Standard-and-Code-Quality"><a class="anchor hidden-xs" href="#Coding-Standard-and-Code-Quality" title="Coding-Standard-and-Code-Quality"><span class="octicon octicon-link"></span></a><span>Coding Standard and Code Quality:</span></h3><p><span>Follow the rules and guidelines outlined in </span><a href="https://hackmd.io/@info/info2_cs" target="_blank" rel="noopener"><span>this document.</span></a></p><p><span>In this assignment, a maximum of 5 points will be deducted for coding standard violations.</span></p><h3 id="Allowed-Packages" data-id="Allowed-Packages"><a class="anchor hidden-xs" href="#Allowed-Packages" title="Allowed-Packages"><span class="octicon octicon-link"></span></a><span>Allowed Packages</span></h3><p><span>Unless otherwise specified in the class description, you are allowed to use the </span><a href="https://docs.python.org/3/py-modindex.html" target="_blank" rel="noopener"><span>standard library</span></a><span> and the following packages:</span></p><pre><code>numpy
+pandas
+scipy
+matplotlib
+plotly
+holoviews
+sklearn
+</code></pre><p><span>Additional ones will not be available in our testing environment.</span></p><h3 id="Automated-Testing-amp-Feedback" data-id="Automated-Testing-amp-Feedback"><a class="anchor hidden-xs" href="#Automated-Testing-amp-Feedback" title="Automated-Testing-amp-Feedback"><span class="octicon octicon-link"></span></a><span>Automated Testing &amp; Feedback</span></h3><p><span>Your submission will be run through an automated testing system for grading. To avoid “but it worked on my machine”-situations, we will run the testing system once every Friday between 00:00 and 09:00 on all submissions uploaded to the TeachCenter by then. You will receive feedback via e-mail. This will, of course, only include the methods for which the signature is given in the assignment sheet, not the methods that you design yourself. Note that you will still need to test your code on your own!</span></p><hr><h2 id="Datasets" data-id="Datasets"><a class="anchor hidden-xs" href="#Datasets" title="Datasets"><span class="octicon octicon-link"></span></a><span>Datasets</span></h2><p><span>In this assignment, we will </span><strong><span>continue to work with the data that we used in Assignment 1</span></strong><span>. As in Assignment 1, you can choose between the two provided datasets described in this section. You can also choose to work with both datasets - in this case, you will receive bonus points (see Section </span><a href="#Bonus-Points-4P"><span>“Bonus Points”</span></a><span> below).</span><br>
+<em><span>Hint:</span></em><span> If you design your system well, working with both datasets will be very little extra work compared to working with only one.</span></p><h3 id="Heart-Disease-Dataset" data-id="Heart-Disease-Dataset"><a class="anchor hidden-xs" href="#Heart-Disease-Dataset" title="Heart-Disease-Dataset"><span class="octicon octicon-link"></span></a><span>Heart Disease Dataset</span></h3><p><span>This dataset contains data on heart disease diagnosis. It contains 14 columns, including one column (the column </span><code>target</code><span>) that indicates the presence (or absence) of heart disease in the patient. Missing values in this dataset are specified with </span><code>?</code><span> in the data files.</span></p><p><span>This dataset was created by the following institutions and principal investigators:</span></p><ol>
+<li><span>Hungarian Institute of Cardiology. Budapest: Andras Janosi, M.D.</span></li>
+<li><span>University Hospital, Zurich, Switzerland: William Steinbrunn, M.D.</span></li>
+<li><span>University Hospital, Basel, Switzerland: Matthias Pfisterer, M.D.</span></li>
+<li><span>V.A. Medical Center, Long Beach and Cleveland Clinic Foundation: Robert Detrano, M.D., Ph.D.</span></li>
+</ol><p><span>For more information on this dataset, see </span><a href="https://archive.ics.uci.edu/ml/datasets/heart+disease" target="_blank" rel="noopener"><span>https://archive.ics.uci.edu/ml/datasets/heart+disease</span></a><span>.</span></p><h3 id="Parkinson-Speech-Dataset" data-id="Parkinson-Speech-Dataset"><a class="anchor hidden-xs" href="#Parkinson-Speech-Dataset" title="Parkinson-Speech-Dataset"><span class="octicon octicon-link"></span></a><span>Parkinson Speech Dataset</span></h3><p><span>This dataset was created by Sakar et al. [1] and contains data from speech recordings of subjects with Parkinson’s disease as well as healthy subjects. It contains 31 columns, including one column (the column </span><code>class</code><span>) that indicates the presence (or absence) of Parkinson’s disease and columns containing time-frequency-based features extracted from voice samples. Missing values in this dataset are specified with </span><code>n/a</code><span> in the data files.</span></p><p><span>For more information on this dataset, see Sakar et al. [1] and</span><br>
+<a href="https://archive.ics.uci.edu/ml/datasets/Parkinson+Speech+Dataset+with++Multiple+Types+of+Sound+Recordings" target="_blank" rel="noopener"><span>https://archive.ics.uci.edu/ml/datasets/Parkinson+Speech+Dataset+with++Multiple+Types+of+Sound+Recordings</span></a><span>.</span></p><h3 id="Dataset-Sources" data-id="Dataset-Sources"><a class="anchor hidden-xs" href="#Dataset-Sources" title="Dataset-Sources"><span class="octicon octicon-link"></span></a><span>Dataset Sources</span></h3><p><span>Both datasets have been made available in the UCI Machine Learning Repository [2].</span></p><p><span>[1] Sakar, B. E., et al. (2013). Collection and analysis of a Parkinson speech dataset with multiple types of sound recordings. IEEE Journal of Biomedical and Health Informatics, 17(4), 828-834.</span><br>
+<span>[2] Dua, D. and Graff, C. (2019). UCI Machine Learning Repository [</span><a href="http://archive.ics.uci.edu/ml" target="_blank" rel="noopener"><span>http://archive.ics.uci.edu/ml</span></a><span>]. Irvine, CA: University of California, School of Information and Computer Science.</span></p><hr><h2 id="Provided-Files" data-id="Provided-Files"><a class="anchor hidden-xs" href="#Provided-Files" title="Provided-Files"><span class="octicon octicon-link"></span></a><span>Provided Files</span></h2><h3 id="Input-Files" data-id="Input-Files"><a class="anchor hidden-xs" href="#Input-Files" title="Input-Files"><span class="octicon octicon-link"></span></a><span>Input Files</span></h3><p><span>All input files that you need for this assignment are provided in the “Assignment 2” Section in the TeachCenter.</span></p><h4 id="Data-Files" data-id="Data-Files"><a class="anchor hidden-xs" href="#Data-Files" title="Data-Files"><span class="octicon octicon-link"></span></a><span>Data Files</span></h4><p><strong><span>The data files are identical to the ones that you used in Assignment 1.</span></strong><br>
+<span>Here’s a reminder of the format: The data for a dataset is contained in several </span><code>.csv</code><span> files.  These </span><code>.csv</code><span> files have no column headers; the column names can be found in an extra </span><code>.json</code><span> file (in the same directory as the </span><code>.csv</code><span> files), along with a description of each column.</span></p><h4 id="Config-File" data-id="Config-File"><a class="anchor hidden-xs" href="#Config-File" title="Config-File"><span class="octicon octicon-link"></span></a><span>Config File</span></h4><p><span>As in Assignment 1, we have provided </span><code>.json</code><span> templates for the config files (one for each dataset). The config files are identical to the ones used in Assignment 1, except for five new lines that will be needed for the classification task. The values below are example values - change them as needed:</span></p><pre><code class="json hljs">    <span class="token property">"test_size"</span><span class="token operator">:</span> <span class="token number">0.33</span><span class="token punctuation">,</span>
+    <span class="token property">"random_state_for_split"</span><span class="token operator">:</span> <span class="token number">42</span><span class="token punctuation">,</span>
+    <span class="token property">"classification_output_folder"</span><span class="token operator">:</span> <span class="token string">"heart_disease_plots"</span><span class="token punctuation">,</span>
+    <span class="token property">"features_to_use_for_classification"</span><span class="token operator">:</span> <span class="token punctuation">[</span><span class="token string">"all"</span><span class="token punctuation">]</span><span class="token punctuation">,</span>
+    <span class="token property">"impute_strategy"</span><span class="token operator">:</span> <span class="token string">"mean"</span> 
+</code></pre><p><span>For further details, see the descriptions of the required classes below.</span></p><h3 id="File-test_classesipynb" data-id="File-test_classesipynb"><a class="anchor hidden-xs" href="#File-test_classesipynb" title="File-test_classesipynb"><span class="octicon octicon-link"></span></a><span>File </span><code>test_classes.ipynb</code></h3><p><span>You can run the cells in this notebook to test whether your system works as intended. Note that not all functionality of the system is tested in the provided code, and you still have to do additional testing yourself.</span></p><p><span>The notebook creates objects of several classifiers from </span><code>sklearn</code><span> and passes them to </span><code>DataPredictor</code><span>'s </span><code>best_classifier</code><span> method for comparison. For your technical report, choose your own list of classifiers (your list can include the classifiers that are already in the list, but also do your own research).</span></p><hr><h2 id="Description-of-the-Required-Classes" data-id="Description-of-the-Required-Classes"><a class="anchor hidden-xs" href="#Description-of-the-Required-Classes" title="Description-of-the-Required-Classes"><span class="octicon octicon-link"></span></a><span>Description of the Required Classes</span></h2><p><span>In Assignment 2, you will extend the functionality of the system that you implemented in Assignment 1. You will implement functionality for </span><a href="https://en.wikipedia.org/wiki/Supervised_learning" target="_blank" rel="noopener"><span>supervised learning</span></a><span>: The system will be able to train and evaluate different </span><a href="https://en.wikipedia.org/wiki/Statistical_classification" target="_blank" rel="noopener"><span>classifiers</span></a><span>, visualize evaluation results, and compare the predictive performance of different classifiers.</span></p><p><span>This section describes the required classes. These classes have to be implemented by you.</span><br>
+<span>Furthermore, for each required class, the required properties and methods are described. You have to implement these required properties and methods, but you are free to (and, depending on your design, might need to) implement additional ones. Use non-public names (with leading </span><code>_</code><span>) for methods and attributes that you add yourself.</span></p><h3 id="Class-Dataset-2P" data-id="Class-Dataset-2P"><a class="anchor hidden-xs" href="#Class-Dataset-2P" title="Class-Dataset-2P"><span class="octicon octicon-link"></span></a><span>Class </span><code>Dataset</code><span> (2P)</span></h3><p><span>For this assignment, you will extend the functionality of the </span><code>Dataset</code><span> class that you wrote in Assignment 1. If you prefer, you may instead use our version of the </span><code>Dataset</code><span> class as a basis for your extensions, but we encourage you to continue using your own code. A version of the </span><code>Dataset</code><span> class is also available to download in the “Assignment 2” section in the TeachCenter (file </span><code>dataset_template.py</code><span>). If you use our version of the </span><code>Dataset</code><span> class, make sure that you understand the code.</span><br>
+<span>As in Assignment 1, the class </span><code>Dataset</code><span> holds the data and provides dataset-related functionality. The extended </span><code>Dataset</code><span> class must have all the properties and methods that were required in Assignment 1. Additionally, the extended version of the </span><code>Dataset</code><span> class must have the following functionality:</span></p><h4 id="Required-Additional-Method-split_data" data-id="Required-Additional-Method-split_data"><a class="anchor hidden-xs" href="#Required-Additional-Method-split_data" title="Required-Additional-Method-split_data"><span class="octicon octicon-link"></span></a><span>Required Additional Method: </span><code>split_data</code></h4><ul>
+<li>
+<p><span>Functionality:</span><br>
+<span>This method splits the dataset into a training and a test set. The training set will later be used to train a classifier; the test set will be used to evaluate the predictive performance of a classifier. You can use the method </span><code>train_test_split</code><span> [3] from </span><code>sklearn.model_selection</code><span> in your implementation of </span><code>split_data</code><span>.</span></p>
+<p><span>The method </span><code>split_data</code><span> uses the following information provided in the config file:</span></p>
+<ul>
+<li><code>random_state_for_split</code><span>: The random state for the train/test split. Setting a random state allows for reproducible output (see [3] for further details).</span></li>
+<li><code>test_size</code><span>: The size of the test set. This should be a number between </span><code>0.0</code><span> and </span><code>1.0</code><span>, representing the fraction of the data that you want to include in your test set (see [3] for further details).</span></li>
+<li><code>features_to_use_for_classification</code><span>: A list of the names of the features that you want to use for training the classifier. The value </span><code>"all"</code><span> indicates that all features (except the target variable) should be used for classification.</span></li>
+</ul>
+<p><em><span>Hint</span></em><span>: It is probably a good idea to extend the </span><code>Dataset</code><span>'s </span><code>__init__</code><span> method so that it stores these three specified values in non-public instance attributes.</span></p>
+<p><span>The method </span><code>split_data</code><span> also provides the option to impute missing values according to the strategy specified in the parameter </span><code>impute_strategy</code><span>. You can use </span><code>sklearn.impute.SimpleImputer</code><span> [4] to do this. The following imputation strategies (i.e., allowed values for the parameter </span><code>impute_strategy</code><span>) should be supported:</span></p>
+<ul>
+<li><code>"mean"</code><span>: This strategy replaces any missing values of a feature by the mean of that feature in the training set (also see [4]).</span></li>
+<li><code>"median"</code><span>: This strategy replaces any missing values of a feature by the median of that feature in the training set (also see [4]).</span></li>
+<li><code>"most_frequent"</code><span>: This strategy replaces any missing values of a feature by the most frequently occurring value of that feature in the training set (also see [4]).</span></li>
+<li><code>None</code><span>: Completely removes all rows where any feature has a missing value.</span></li>
+</ul>
+<p><span>[3] </span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html" target="_blank" rel="noopener"><span>https://scikit-learn.org/stable/modules/generated/sklearn.model_selection.train_test_split.html</span></a><br>
+<span>[4] </span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html" target="_blank" rel="noopener"><span>https://scikit-learn.org/stable/modules/generated/sklearn.impute.SimpleImputer.html</span></a></p>
+</li>
+<li>
+<p><span>Parameters:</span></p>
+<table>
+<thead>
+<tr>
+<th><span>Name</span></th>
+<th><span>Type</span></th>
+<th><span>Default Value</span></th>
+<th><span>Description</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>impute_strategy</code></td>
+<td><code>str</code></td>
+<td><code>None</code></td>
+<td><span>The imputation strategy for filling in missing values (see functionality description for details).</span></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><span>Return:</span></p>
+<table>
+<thead>
+<tr>
+<th><span>Type</span></th>
+<th><span>Shape</span></th>
+<th><span>Description</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_train_samples&gt;, &lt;num_features&gt;)</code></td>
+<td><span>The feature matrix of the training set, i.e., the values of all features to be used in the classification as specified in </span><code>features_to_use_for_classification</code><span> in the </span><a href="#Config-File"><span>config file</span></a></td>
+</tr>
+<tr>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_train_samples&gt;,)</code></td>
+<td><span>The target vector (i.e., the values of the target variable) of the training set.</span></td>
+</tr>
+<tr>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_test_samples&gt;, &lt;num_features&gt;)</code></td>
+<td><span>The feature matrix of the test set, i.e., the values of all features to be used in the classification as specified in </span><code>features_to_use_for_classification</code><span> in the </span><a href="#Config-File"><span>config file</span></a></td>
+</tr>
+<tr>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_test_samples&gt;,)</code></td>
+<td><span>The target vector (i.e., the values of the target variable) of the test set.</span></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul><h3 id="Class-EvaluationMetrics-5P" data-id="Class-EvaluationMetrics-5P"><a class="anchor hidden-xs" href="#Class-EvaluationMetrics-5P" title="Class-EvaluationMetrics-5P"><span class="octicon octicon-link"></span></a><span>Class </span><code>EvaluationMetrics</code><span> (5P)</span></h3><p><span>The class </span><code>EvaluationMetrics</code><span> is responsible for calculating various evaluation metrics. </span><strong><span>Only use </span><code>numpy</code><span> and the standard library in your implementation of this class.</span></strong><span> It is sufficient if your implementation is able to handle binary target variables (i.e., you don’t have to consider cases with more than two possible target values).</span><br>
+<strong><span>Note:</span></strong><span> The term “class” in the description of the properties and the </span><code>__str__</code><span> method refers to the target variable and not to the object-oriented programming concept of classes. </span><code>&lt;num_classes&gt;</code><span> is the number of different target variables (2 in the binary case).</span></p><h4 id="Required-Properties" data-id="Required-Properties"><a class="anchor hidden-xs" href="#Required-Properties" title="Required-Properties"><span class="octicon octicon-link"></span></a><span>Required Properties</span></h4><table>
+<thead>
+<tr>
+<th><span>Name</span></th>
+<th><span>Type</span></th>
+<th><span>Shape</span></th>
+<th><span>Getter</span></th>
+<th><span>Setter</span></th>
+<th><span>Description</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>confusion_matrix</code></td>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_classes&gt;,&lt;num_classes&gt;)</code></td>
+<td><span>yes</span></td>
+<td><span>no</span></td>
+<td><span>A </span><a href="https://en.wikipedia.org/wiki/Confusion_matrix" target="_blank" rel="noopener"><span>confusion matrix</span></a><span> in the same format as in [5].</span></td>
+</tr>
+<tr>
+<td><code>FP</code></td>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_classes&gt;,)</code></td>
+<td><span>yes</span></td>
+<td><span>no</span></td>
+<td><span>The number of false positives for each class.</span></td>
+</tr>
+<tr>
+<td><code>FN</code></td>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_classes&gt;,)</code></td>
+<td><span>yes</span></td>
+<td><span>no</span></td>
+<td><span>The number of false negatives for each class.</span></td>
+</tr>
+<tr>
+<td><code>TP</code></td>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_classes&gt;,)</code></td>
+<td><span>yes</span></td>
+<td><span>no</span></td>
+<td><span>The number of true positives for each class.</span></td>
+</tr>
+<tr>
+<td><code>TN</code></td>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_classes&gt;,)</code></td>
+<td><span>yes</span></td>
+<td><span>no</span></td>
+<td><span>The number of true negatives for each class.</span></td>
+</tr>
+<tr>
+<td><code>precision</code></td>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_classes&gt;,)</code></td>
+<td><span>yes</span></td>
+<td><span>no</span></td>
+<td><span>The precision for each class.</span></td>
+</tr>
+<tr>
+<td><code>recall</code></td>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_classes&gt;,)</code></td>
+<td><span>yes</span></td>
+<td><span>no</span></td>
+<td><span>The recall for each class.</span></td>
+</tr>
+<tr>
+<td><code>F1</code></td>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_classes&gt;,)</code></td>
+<td><span>yes</span></td>
+<td><span>no</span></td>
+<td><span>The F1-score for each class.</span></td>
+</tr>
+<tr>
+<td><code>accuracy_score</code></td>
+<td><code>numpy.float64</code></td>
+<td></td>
+<td><span>yes</span></td>
+<td><span>no</span></td>
+<td><span>The accuracy of the classifier.</span></td>
+</tr>
+</tbody>
+</table><p><span>For all properties listed above, the entry for a specific class label (i.e. unique target variable) can be found by using it as an index. E.g., </span><code>FP[0]</code><span> gives the number of false positives for class </span><code>0</code><span>, </span><code>TN[1]</code><span> gives the number of true negatives for class </span><code>1</code><span>.</span></p><p><span>[5] </span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html" target="_blank" rel="noopener"><span>https://scikit-learn.org/stable/modules/generated/sklearn.metrics.confusion_matrix.html</span></a></p><h4 id="Required-Method-__init__" data-id="Required-Method-__init__"><a class="anchor hidden-xs" href="#Required-Method-__init__" title="Required-Method-__init__"><span class="octicon octicon-link"></span></a><span>Required Method: </span><code>__init__</code></h4><ul>
+<li>
+<p><span>Functionality:</span><br>
+<span>The values of the parameters </span><code>y_true</code><span> and </span><code>y_pred</code><span> are stored in non-public instance attributes.</span></p>
+</li>
+<li>
+<p><span>Parameters:</span></p>
+<table>
+<thead>
+<tr>
+<th><span>Name</span></th>
+<th><span>Type</span></th>
+<th><span>Shape</span></th>
+<th><span>Description</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>y_true</code></td>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_test_samples&gt;,)</code></td>
+<td><span>The true values of the target variable (obtained from the test set)</span></td>
+</tr>
+<tr>
+<td><code>y_pred</code></td>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_test_samples&gt;,)</code></td>
+<td><span>The values of the target variable that a classifier predicted</span></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul><h4 id="Required-Method-__str__" data-id="Required-Method-__str__"><a class="anchor hidden-xs" href="#Required-Method-__str__" title="Required-Method-__str__"><span class="octicon octicon-link"></span></a><span>Required Method: </span><code>__str__</code></h4><ul>
+<li>
+<p><span>Functionality:</span><br>
+<span>This method summarizes the result of the evaluation as a string.</span><br>
+<span>Specifically, the method returns a string in the following format:</span></p>
+<pre><code>Evaluation Summary:
+    Accuracy: &lt;value&gt;
+    Precision:
+        Class &lt;class&gt;: &lt;value&gt;            Class &lt;class&gt;: &lt;value&gt;			
+    Recall:
+        Class &lt;class&gt;: &lt;value&gt;            Class &lt;class&gt;: &lt;value&gt;			
+    F1 Score:
+        Class &lt;class&gt;: &lt;value&gt;            Class &lt;class&gt;: &lt;value&gt;			
+    True Positives:
+        Class &lt;class&gt;: &lt;value&gt;            Class &lt;class&gt;: &lt;value&gt;			
+    True Negatives:
+        Class &lt;class&gt;: &lt;value&gt;            Class &lt;class&gt;: &lt;value&gt;			
+    False Positives:
+        Class &lt;class&gt;: &lt;value&gt;            Class &lt;class&gt;: &lt;value&gt;	
+    False Negatives:
+        Class &lt;class&gt;: &lt;value&gt;            Class &lt;class&gt;: &lt;value&gt;	
+</code></pre>
+<p><span>The metrics are indented by </span><code>\t</code><span>, the lines containing the values for the classes are indented by </span><code>\t\t</code><span>, and the classes are separated by </span><code>\t\t\t</code><span>. Accuracy, precision, recall and F1-score are rounded to two decimal places.</span><br>
+<span>For example, the resulting string could look like this (when printed):</span></p>
+<pre><code>Evaluation Summary:
+    Accuracy: 0.80
+    Precision:
+        Class 0: 0.80			Class 1: 0.81			
+    Recall:
+        Class 0: 0.84			Class 1: 0.76			
+    F1 Score:
+        Class 0: 0.78			Class 1: 0.82			
+    True Positives:
+        Class 0: 107			Class 1: 137			
+    True Negatives:
+        Class 0: 137			Class 1: 107			
+    False Positives:
+        Class 0: 27			Class 1: 33			
+    False Negatives:
+        Class 0: 33			Class 1: 27	
+</code></pre>
+</li>
+</ul><h3 id="Class-DataPredictor-6P" data-id="Class-DataPredictor-6P"><a class="anchor hidden-xs" href="#Class-DataPredictor-6P" title="Class-DataPredictor-6P"><span class="octicon octicon-link"></span></a><span>Class </span><code>DataPredictor</code><span> (6P)</span></h3><p><span>The class </span><code>DataPredictor</code><span> is responsible for training different classifiers and predicting the target values of the test dataset.</span></p><h4 id="Required-Method-__init__1" data-id="Required-Method-__init__"><a class="anchor hidden-xs" href="#Required-Method-__init__1" title="Required-Method-__init__1"><span class="octicon octicon-link"></span></a><span>Required Method: </span><code>__init__</code></h4><ul>
+<li>
+<p><span>Functionality:</span><br>
+<span>The dataset and the information from the configuration dictionary are stored in non-public instance attributes. It is also a good idea to call the </span><code>Dataset</code><span>'s </span><code>split_data</code><span> method and store the arrays returned by </span><code>split_data</code><span> in instance attributes.</span></p>
+</li>
+<li>
+<p><span>Parameters:</span></p>
+<table>
+<thead>
+<tr>
+<th><span>Name</span></th>
+<th><span>Type</span></th>
+<th><span>Description</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>dataset</code></td>
+<td><code>Dataset</code></td>
+<td><span>The dataset you want to use for your classification tasks.</span></td>
+</tr>
+<tr>
+<td><code>config_info_dict</code></td>
+<td><code>dict[str, Any]</code></td>
+<td><span>A dictionary containing the information from the config file.</span></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul><h4 id="Required-Method-best_classifier" data-id="Required-Method-best_classifier"><a class="anchor hidden-xs" href="#Required-Method-best_classifier" title="Required-Method-best_classifier"><span class="octicon octicon-link"></span></a><span>Required Method: </span><code>best_classifier</code></h4><ul>
+<li>
+<p><span>Functionality:</span><br>
+<span>This method receives a list of classifier objects and determines which classifier has the best accuracy. The method trains (i.e. fits) each classifier in the list on the training set and uses each trained classifier to predict the target values for the test set. The method also creates an </span><code>EvaluationMetrics</code><span> object for each classifier and stores them in an instance attribute.</span><br>
+<span>The method returns the classifier object that reached the highest accuracy.</span></p>
+</li>
+<li>
+<p><span>Parameters:</span></p>
+<table>
+<thead>
+<tr>
+<th><span>Name</span></th>
+<th><span>Type</span></th>
+<th><span>Description</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>classifiers</code></td>
+<td><code>list</code></td>
+<td><span>A list of classifier objects to be compared. Each classifier in the list must have the methods </span><code>fit</code><span> and </span><code>predict</code><span> implemented.</span></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><span>Return:</span></p>
+<table>
+<thead>
+<tr>
+<th><span>Type</span></th>
+<th><span>Description</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><span>classifier object</span></td>
+<td><span>The trained classifier with the best accuracy from the list of classifier objects (parameter </span><code>classifiers</code><span>).</span></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul><h4 id="Required-Method-print_evaluation_results" data-id="Required-Method-print_evaluation_results"><a class="anchor hidden-xs" href="#Required-Method-print_evaluation_results" title="Required-Method-print_evaluation_results"><span class="octicon octicon-link"></span></a><span>Required Method: </span><code>print_evaluation_results</code></h4><ul>
+<li>
+<p><span>Functionality:</span><br>
+<span>This method prints the evaluation results. First, it prints the accuracy score of each evaluated classifier (sorted from highest to lowest accuracy) in the following format:</span></p>
+<pre><code>Classifiers Ranked by Accuracy:
+    &lt;best classifier&gt; Accuracy Score: &lt;score&gt;
+    &lt;second-best classifier&gt; Accuracy Score: &lt;score&gt;
+    ....
+    &lt;worst classifier&gt; Accuracy Score: &lt;score&gt;
+</code></pre>
+<p><span>The lines containing the scores are indented by a </span><code>\t</code><span>.</span><br>
+<span>Then, the method prints the following string:</span></p>
+<pre><code>Detailed info on the best classifier &lt;best classifier&gt;:
+</code></pre>
+<p><span>Finally, it calls the </span><code>__str__</code><span> method of the </span><code>EvaluationMetrics</code><span> object that represents the evaluation of the best classifier.</span></p>
+<p><span>An example output for two evaluated classifiers could look like this:</span></p>
+<pre><code>Classifiers Ranked by Accuracy:
+    LogisticRegression(max_iter=10000, random_state=0) Accuracy Score: 0.80
+    DummyClassifier(strategy='most_frequent') Accuracy Score: 0.54
+Detailed info of the best classifier LogisticRegression(max_iter=10000, random_state=0):
+Evaluation Summary:
+    Accuracy: 0.80
+    Precision:
+        Class 0: 0.80			Class 1: 0.81			
+    Recall:
+        Class 0: 0.84			Class 1: 0.76			
+    F1 Score:
+        Class 0: 0.78			Class 1: 0.82			
+    True Positives:
+        Class 0: 107			Class 1: 137			
+    True Negatives:
+        Class 0: 137			Class 1: 107			
+    False Positives:
+        Class 0: 27			Class 1: 33			
+    False Negatives:
+        Class 0: 33			Class 1: 27
+</code></pre>
+<p><span>This method has no parameters or return values.</span></p>
+</li>
+</ul><h4 id="Required-Method-visualize_classification_results" data-id="Required-Method-visualize_classification_results"><a class="anchor hidden-xs" href="#Required-Method-visualize_classification_results" title="Required-Method-visualize_classification_results"><span class="octicon octicon-link"></span></a><span>Required Method: </span><code>visualize_classification_results</code></h4><ul>
+<li>
+<p><span>Functionality:</span><br>
+<span>This method creates two plots to visualize the classification results: a plot showing the </span><a href="https://en.wikipedia.org/wiki/Confusion_matrix" target="_blank" rel="noopener"><span>confusion matrices</span></a><span> and a bar chart that shows the accuracy of each evaluated classifier. Work with your preferred plotting library.</span></p>
+<ul>
+<li><span>The plot containing the confusion matrices contains one confusion matrix for each evaluated classifier. The layout and style of the plot is up to you. For example, if you evaluated two classifiers, the plot could look like this:</span></li>
+</ul>
+<p><img src="https://i.imgur.com/sXxs02h.png" alt=""></p>
+<ul>
+<li><span>The bar chart shows the accuracy of all evaluated classifiers. Again, the style of the plot is up to you. For example, if you evaluated two classifiers, the bar chart could look like this:</span></li>
+</ul>
+<p><img src="https://i.imgur.com/wz2NV7L.png" alt="" width="600"></p>
+<p><span>The method saves the plots in the folder specified in the config file variable </span><code>classification_output_folder</code><span>. The file name of the plot containing the confusion matrices should be named </span><code>confusion_matrices.&lt;png|html&gt;</code><span>, and the file with the bar chart should be named </span><code>accuracy_comparison.&lt;png|html&gt;</code><span>.</span><br>
+<em><span>Hint</span></em><span>: You might want to create and call additional (non-public) methods to handle parts of the functionality and not implement everything directly in this method.</span></p>
+<p><span>This method has no parameters or return values.</span></p>
+</li>
+</ul><h3 id="Class-kNN-5P" data-id="Class-kNN-5P"><a class="anchor hidden-xs" href="#Class-kNN-5P" title="Class-kNN-5P"><span class="octicon octicon-link"></span></a><span>Class </span><code>kNN</code><span> (5P)</span></h3><p><span>The class </span><code>kNN</code><span> implements the k-nearest neighbors (KNN) classification algorithm. It uses cosine distance (i.e., 1 - </span><a href="https://en.wikipedia.org/wiki/Cosine_similarity" target="_blank" rel="noopener"><span>cosine similarity</span></a><span>) as the distance metric. </span><strong><span>Only use </span><code>numpy</code><span> and the standard library in your implementation of this class.</span></strong><br>
+<strong><span>Note:</span></strong><span> You will learn about this algorithm in detail in the tutorials. There is also a basic explanation </span><a href="https://medium.com/analytics-vidhya/a-beginners-guide-to-k-nearest-neighbor-knn-algorithm-with-code-5015ce8b227e" target="_blank" rel="noopener"><span>here</span></a><span> and a more thorough and mathematical one on </span><a href="https://en.wikipedia.org/wiki/K-nearest_neighbors_algorithm" target="_blank" rel="noopener"><span>Wikipedia</span></a><span>.</span><br>
+<strong><span>Note:</span></strong><span> You can use </span><code>sklearn.neighbors.KNeighborsClassifier</code><span> (with the parameter </span><code>metric='cosine'</code><span>) to check whether your implementation works correctly (but do not use it in your implementation ;).</span></p><h4 id="Required-Method-__init__2" data-id="Required-Method-__init__"><a class="anchor hidden-xs" href="#Required-Method-__init__2" title="Required-Method-__init__2"><span class="octicon octicon-link"></span></a><span>Required Method: </span><code>__init__</code></h4><ul>
+<li>
+<p><span>Functionality:</span><br>
+<span>The value of the parameter </span><code>n_neighbors</code><span> is stored in a public instance attribute of identical name.</span></p>
+</li>
+<li>
+<p><span>Parameters:</span></p>
+<table>
+<thead>
+<tr>
+<th><span>Name</span></th>
+<th><span>Type</span></th>
+<th><span>Description</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>n_neighbors</code></td>
+<td><code>int</code></td>
+<td><span>How many neighbors should be taken into account</span></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul><h4 id="Required-Method-fit" data-id="Required-Method-fit"><a class="anchor hidden-xs" href="#Required-Method-fit" title="Required-Method-fit"><span class="octicon octicon-link"></span></a><span>Required Method: </span><code>fit</code></h4><ul>
+<li>
+<p><span>Functionality:</span><br>
+<span>This method stores the parameters in non-public instance attributes.</span><br>
+<strong><span>Note:</span></strong><span> The </span><code>fit</code><span> method of a classifier usually learns from the training data. Since the k-nearest neighbors classifier works by comparing every test sample to every training sample, this usual training step is not applicable. It is however possible to do part of the calculation of the cosine distance using only the training data. You can decide how to handle this implementation detail yourself.</span></p>
+</li>
+<li>
+<p><span>Parameters:</span></p>
+<table>
+<thead>
+<tr>
+<th><span>Name</span></th>
+<th><span>Type</span></th>
+<th><span>Shape</span></th>
+<th><span>Description</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>X_train</code></td>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_train_samples&gt;,&lt;num_features&gt;)</code></td>
+<td><span>The feature matrix of the training set.</span></td>
+</tr>
+<tr>
+<td><code>y_train</code></td>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_train_samples&gt;,)</code></td>
+<td><span>The target vector of the training set.</span></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul><h4 id="Required-Method-predict" data-id="Required-Method-predict"><a class="anchor hidden-xs" href="#Required-Method-predict" title="Required-Method-predict"><span class="octicon octicon-link"></span></a><span>Required Method: </span><code>predict</code></h4><ul>
+<li>
+<p><span>Functionality:</span><br>
+<span>This method predicts the values of the target variable for the provided feature matrix of the test set (parameter </span><code>X_test</code><span>). It uses cosine distance (i.e., 1 - </span><a href="https://en.wikipedia.org/wiki/Cosine_similarity" target="_blank" rel="noopener"><span>cosine similarity</span></a><span>) as the distance metric.</span><br>
+<strong><span>Hint:</span></strong><span> Due to the small size of the used datasets the classification process will finish rather quickly, independently of the efficiency of your implementation. It is however always advisable to think about (1) which parts of the calculations are constant for every test sample and only have to be calculated once and (2) which calculations can be performed using array operations instead of loops.</span></p>
+</li>
+<li>
+<p><span>Parameters:</span></p>
+<table>
+<thead>
+<tr>
+<th><span>Name</span></th>
+<th><span>Type</span></th>
+<th><span>Shape</span></th>
+<th><span>Description</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>X_test</code></td>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_test_samples&gt;,&lt;num_features&gt;)</code></td>
+<td><span>The feature matrix of the test set.</span></td>
+</tr>
+</tbody>
+</table>
+</li>
+<li>
+<p><span>Return:</span></p>
+<table>
+<thead>
+<tr>
+<th><span>Type</span></th>
+<th><span>Shape</span></th>
+<th><span>Description</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>numpy.ndarray</code></td>
+<td><code>(&lt;num_test_samples&gt;,)</code></td>
+<td><span>The predicted values of the target variable.</span></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul><hr><h2 id="Technical-Report-7P" data-id="Technical-Report-7P"><a class="anchor hidden-xs" href="#Technical-Report-7P" title="Technical-Report-7P"><span class="octicon octicon-link"></span></a><span>Technical Report (7P)</span></h2><p><span>In addition to your implementation of the system, you will submit a technical report in which you describe your classification experiments. You can choose the setup yourself, but be sure to compare at least four different classifiers. You should also choose a baseline (e.g., random assignment of target values or a </span><a href="https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html" target="_blank" rel="noopener"><code>DummyClassifier</code></a><span>) and check if the classifiers perform better than the baseline.</span></p><p><span>Your technical report should contain (at least) the following sections:</span></p><ul>
+<li><span>Introduction: In this section, you introduce your work and give the reader some general information such as which dataset you used.</span></li>
+<li><span>Experimental Setup: This section should describe the details of your setup, i.e., which classifiers you used, which features you used, the size of your test set, which metrics you relied on for evaluation, how you handled missing values, what your baseline was, etc. Try to give reasons for your choices.</span></li>
+<li><span>Results and Discussion: In this section, you present and interpret your results. You may also discuss any problems or difficulties that you encountered. You should include plots to visualize your results. You may also include tables.</span></li>
+<li><span>Conclusion: This section should summarize your main results and give concluding remarks. Also describe how you would try to further improve the prediction, based on the results that you obtained in this assignment.</span></li>
+</ul><p><span>Keep your report short and concise, it should not be more than about 2-3 pages of text (excluding the plots). Submit your report as a .pdf file. </span><strong><span>Make sure that your technical report includes your name and matriculation number.</span></strong></p><hr><h2 id="Bonus-Points-4P" data-id="Bonus-Points-4P"><a class="anchor hidden-xs" href="#Bonus-Points-4P" title="Bonus-Points-4P"><span class="octicon octicon-link"></span></a><span>Bonus Points (4P)</span></h2><h3 id="1-Use-both-datasets-1P" data-id="1-Use-both-datasets-1P"><a class="anchor hidden-xs" href="#1-Use-both-datasets-1P" title="1-Use-both-datasets-1P"><span class="octicon octicon-link"></span></a><span>1. Use both datasets (1P)</span></h3><p><span>You will get bonus points if you work with both datasets. This means that all cells in </span><code>test_classes.ipynb</code><span> should work with your implementation. If you do this bonus task, your technical report should still only describe your experiments with one of the datasets.</span></p><h3 id="2-Reflect-on-what-you-learned-in-this-assignment-1P" data-id="2-Reflect-on-what-you-learned-in-this-assignment-1P"><a class="anchor hidden-xs" href="#2-Reflect-on-what-you-learned-in-this-assignment-1P" title="2-Reflect-on-what-you-learned-in-this-assignment-1P"><span class="octicon octicon-link"></span></a><span>2. Reflect on what you learned in this assignment (1P)</span></h3><p><span>Reflect on what you learned while working on this assignment. Which aspects of the assignment were difficult for you? Which aspects were easy? Of the skills that you developed during this assignment, which ones do you think will be the most useful for your future career? Which aspects did you enjoy/find interesting, which ones not so much? Are there any aspects that you missed or would have liked to learn more about?</span><br>
+<span>Answer these questions in a short text (~150-200 words). Please include  information on which program (Studienrichtung) you are studying. Submit this text in the text field that is provided in the TeachCenter submission interface (field “Texteingabe online”).</span></p><h3 id="3-Additional-distance-metrics-for-kNN-2P" data-id="3-Additional-distance-metrics-for-kNN-2P"><a class="anchor hidden-xs" href="#3-Additional-distance-metrics-for-kNN-2P" title="3-Additional-distance-metrics-for-kNN-2P"><span class="octicon octicon-link"></span></a><span>3. Additional distance metrics for </span><code>kNN</code><span> (2P)</span></h3><p><span>Extend your implementation of the </span><code>kNN</code><span> class to allow using different distance metrics. In addition to the cosine distance, implement the following metrics:</span></p><ul>
+<li><a href="https://en.wikipedia.org/wiki/Euclidean_distance" target="_blank" rel="noopener"><span>Euclidean distance</span></a></li>
+<li><a href="https://en.wikipedia.org/wiki/Taxicab_geometry" target="_blank" rel="noopener"><span>Manhattan distance</span></a></li>
+<li><a href="https://en.wikipedia.org/wiki/Chebyshev_distance" target="_blank" rel="noopener"><span>Chebyshev distance</span></a></li>
+</ul><p><strong><span>Again, only use </span><code>numpy</code><span> and the standard library in your implementation.</span></strong></p><h4 id="Modified-Method-__init__" data-id="Modified-Method-__init__"><a class="anchor hidden-xs" href="#Modified-Method-__init__" title="Modified-Method-__init__"><span class="octicon octicon-link"></span></a><span>Modified Method: </span><code>__init__</code></h4><ul>
+<li><span>Parameters:</span>
+<table>
+<thead>
+<tr>
+<th><span>Name</span></th>
+<th><span>Type</span></th>
+<th><span>Default Value</span></th>
+<th><span>Description</span></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>n_neighbors</code></td>
+<td><code>int</code></td>
+<td></td>
+<td><span>How many neighbors should be taken into account</span></td>
+</tr>
+<tr>
+<td><code>metric</code></td>
+<td><code>str</code></td>
+<td><code>"cosine"</code></td>
+<td><span>Which distance metric should be used. Possible values: </span><code>"cosine"</code><span>, </span><code>"euclidean"</code><span>, </span><code>"manhattan"</code><span>, </span><code>"chebyshev"</code></td>
+</tr>
+</tbody>
+</table>
+</li>
+</ul><h4 id="Modified-Method-fit" data-id="Modified-Method-fit"><a class="anchor hidden-xs" href="#Modified-Method-fit" title="Modified-Method-fit"><span class="octicon octicon-link"></span></a><span>Modified Method: </span><code>fit</code></h4><p><span>Depending on the way you implemented the cosine distance calculation, you might need to modify </span><code>kNN.fit</code><span>.</span></p><h4 id="Modified-Method-predict" data-id="Modified-Method-predict"><a class="anchor hidden-xs" href="#Modified-Method-predict" title="Modified-Method-predict"><span class="octicon octicon-link"></span></a><span>Modified Method: </span><code>predict</code></h4><p><span>The classification now depends on the selected metric.</span></p></div>
+    <div class="ui-toc dropup unselectable hidden-print" style="display:none;">
+        <div class="pull-right dropdown">
+            <a id="tocLabel" class="ui-toc-label btn btn-default" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false" title="Table of content">
+                <i class="fa fa-bars"></i>
+            </a>
+            <ul id="ui-toc" class="ui-toc-dropdown dropdown-menu" aria-labelledby="tocLabel">
+                <div class="toc"><ul class="nav">
+<li class=""><a href="#Assignment-2-Supervised-Machine-Learning-Classification-and-Technical-Report--25-Points" title="Assignment 2: Supervised Machine Learning (Classification) and Technical Report | 25 Points">Assignment 2: Supervised Machine Learning (Classification) and Technical Report | 25 Points</a><ul class="nav">
+<li class=""><a href="#Introduction" title="Introduction">Introduction</a></li>
+<li class=""><a href="#General-Information" title="General Information">General Information</a><ul class="nav">
+<li class=""><a href="#Deadlines" title="Deadlines">Deadlines</a></li>
+<li class=""><a href="#Submission-Files" title="Submission Files">Submission Files</a></li>
+<li class=""><a href="#Comment-Header" title="Comment Header">Comment Header</a></li>
+<li class=""><a href="#Coding-Standard-and-Code-Quality" title="Coding Standard and Code Quality:">Coding Standard and Code Quality:</a></li>
+<li class=""><a href="#Allowed-Packages" title="Allowed Packages">Allowed Packages</a></li>
+<li class=""><a href="#Automated-Testing-amp-Feedback" title="Automated Testing &amp; Feedback">Automated Testing &amp; Feedback</a></li>
+</ul>
+</li>
+<li class=""><a href="#Datasets" title="Datasets">Datasets</a><ul class="nav">
+<li class=""><a href="#Heart-Disease-Dataset" title="Heart Disease Dataset">Heart Disease Dataset</a></li>
+<li class=""><a href="#Parkinson-Speech-Dataset" title="Parkinson Speech Dataset">Parkinson Speech Dataset</a></li>
+<li class=""><a href="#Dataset-Sources" title="Dataset Sources">Dataset Sources</a></li>
+</ul>
+</li>
+<li class=""><a href="#Provided-Files" title="Provided Files">Provided Files</a><ul class="nav">
+<li class=""><a href="#Input-Files" title="Input Files">Input Files</a></li>
+<li class=""><a href="#File-test_classesipynb" title="File test_classes.ipynb">File test_classes.ipynb</a></li>
+</ul>
+</li>
+<li class=""><a href="#Description-of-the-Required-Classes" title="Description of the Required Classes">Description of the Required Classes</a><ul class="nav">
+<li class=""><a href="#Class-Dataset-2P" title="Class Dataset (2P)">Class Dataset (2P)</a></li>
+<li class=""><a href="#Class-EvaluationMetrics-5P" title="Class EvaluationMetrics (5P)">Class EvaluationMetrics (5P)</a></li>
+<li class=""><a href="#Class-DataPredictor-6P" title="Class DataPredictor (6P)">Class DataPredictor (6P)</a></li>
+<li class=""><a href="#Class-kNN-5P" title="Class kNN (5P)">Class kNN (5P)</a></li>
+</ul>
+</li>
+<li class=""><a href="#Technical-Report-7P" title="Technical Report (7P)">Technical Report (7P)</a></li>
+<li class=""><a href="#Bonus-Points-4P" title="Bonus Points (4P)">Bonus Points (4P)</a><ul class="nav">
+<li class=""><a href="#1-Use-both-datasets-1P" title="1. Use both datasets (1P)">1. Use both datasets (1P)</a></li>
+<li class=""><a href="#2-Reflect-on-what-you-learned-in-this-assignment-1P" title="2. Reflect on what you learned in this assignment (1P)">2. Reflect on what you learned in this assignment (1P)</a></li>
+<li class=""><a href="#3-Additional-distance-metrics-for-kNN-2P" title="3. Additional distance metrics for kNN (2P)">3. Additional distance metrics for kNN (2P)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+            </ul>
+        </div>
+    </div>
+    <div id="ui-toc-affix" class="ui-affix-toc ui-toc-dropdown unselectable hidden-print" data-spy="affix" style="top:17px;display:none;" null null>
+        <div class="toc"><ul class="nav">
+<li class=""><a href="#Assignment-2-Supervised-Machine-Learning-Classification-and-Technical-Report--25-Points" title="Assignment 2: Supervised Machine Learning (Classification) and Technical Report | 25 Points">Assignment 2: Supervised Machine Learning (Classification) and Technical Report | 25 Points</a><ul class="nav">
+<li class=""><a href="#Introduction" title="Introduction">Introduction</a></li>
+<li class=""><a href="#General-Information" title="General Information">General Information</a><ul class="nav">
+<li class=""><a href="#Deadlines" title="Deadlines">Deadlines</a></li>
+<li class=""><a href="#Submission-Files" title="Submission Files">Submission Files</a></li>
+<li class=""><a href="#Comment-Header" title="Comment Header">Comment Header</a></li>
+<li class=""><a href="#Coding-Standard-and-Code-Quality" title="Coding Standard and Code Quality:">Coding Standard and Code Quality:</a></li>
+<li class=""><a href="#Allowed-Packages" title="Allowed Packages">Allowed Packages</a></li>
+<li class=""><a href="#Automated-Testing-amp-Feedback" title="Automated Testing &amp; Feedback">Automated Testing &amp; Feedback</a></li>
+</ul>
+</li>
+<li class=""><a href="#Datasets" title="Datasets">Datasets</a><ul class="nav">
+<li class=""><a href="#Heart-Disease-Dataset" title="Heart Disease Dataset">Heart Disease Dataset</a></li>
+<li class=""><a href="#Parkinson-Speech-Dataset" title="Parkinson Speech Dataset">Parkinson Speech Dataset</a></li>
+<li class=""><a href="#Dataset-Sources" title="Dataset Sources">Dataset Sources</a></li>
+</ul>
+</li>
+<li class=""><a href="#Provided-Files" title="Provided Files">Provided Files</a><ul class="nav">
+<li class=""><a href="#Input-Files" title="Input Files">Input Files</a></li>
+<li class=""><a href="#File-test_classesipynb" title="File test_classes.ipynb">File test_classes.ipynb</a></li>
+</ul>
+</li>
+<li class=""><a href="#Description-of-the-Required-Classes" title="Description of the Required Classes">Description of the Required Classes</a><ul class="nav">
+<li class=""><a href="#Class-Dataset-2P" title="Class Dataset (2P)">Class Dataset (2P)</a></li>
+<li class=""><a href="#Class-EvaluationMetrics-5P" title="Class EvaluationMetrics (5P)">Class EvaluationMetrics (5P)</a></li>
+<li class=""><a href="#Class-DataPredictor-6P" title="Class DataPredictor (6P)">Class DataPredictor (6P)</a></li>
+<li class=""><a href="#Class-kNN-5P" title="Class kNN (5P)">Class kNN (5P)</a></li>
+</ul>
+</li>
+<li class=""><a href="#Technical-Report-7P" title="Technical Report (7P)">Technical Report (7P)</a></li>
+<li class=""><a href="#Bonus-Points-4P" title="Bonus Points (4P)">Bonus Points (4P)</a><ul class="nav">
+<li class=""><a href="#1-Use-both-datasets-1P" title="1. Use both datasets (1P)">1. Use both datasets (1P)</a></li>
+<li class=""><a href="#2-Reflect-on-what-you-learned-in-this-assignment-1P" title="2. Reflect on what you learned in this assignment (1P)">2. Reflect on what you learned in this assignment (1P)</a></li>
+<li class=""><a href="#3-Additional-distance-metrics-for-kNN-2P" title="3. Additional distance metrics for kNN (2P)">3. Additional distance metrics for kNN (2P)</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div><div class="toc-menu"><a class="expand-toggle" href="#">Expand all</a><a class="back-to-top" href="#">Back to top</a><a class="go-to-bottom" href="#">Go to bottom</a></div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gist-embed/2.6.0/gist-embed.min.js" integrity="sha256-KyF2D6xPIJUW5sUDSs93vWyZm+1RzIpKCexxElmxl8g=" crossorigin="anonymous" defer></script>
+    <script>
+        var markdown = $(".markdown-body");
+        //smooth all hash trigger scrolling
+        function smoothHashScroll() {
+            var hashElements = $("a[href^='#']").toArray();
+            for (var i = 0; i < hashElements.length; i++) {
+                var element = hashElements[i];
+                var $element = $(element);
+                var hash = element.hash;
+                if (hash) {
+                    $element.on('click', function (e) {
+                        // store hash
+                        var hash = this.hash;
+                        if ($(hash).length <= 0) return;
+                        // prevent default anchor click behavior
+                        e.preventDefault();
+                        // animate
+                        $('body, html').stop(true, true).animate({
+                            scrollTop: $(hash).offset().top
+                        }, 100, "linear", function () {
+                            // when done, add hash to url
+                            // (default click behaviour)
+                            window.location.hash = hash;
+                        });
+                    });
+                }
+            }
+        }
+
+        smoothHashScroll();
+        var toc = $('.ui-toc');
+        var tocAffix = $('.ui-affix-toc');
+        var tocDropdown = $('.ui-toc-dropdown');
+        //toc
+        tocDropdown.click(function (e) {
+            e.stopPropagation();
+        });
+
+        var enoughForAffixToc = true;
+
+        function generateScrollspy() {
+            $(document.body).scrollspy({
+                target: ''
+            });
+            $(document.body).scrollspy('refresh');
+            if (enoughForAffixToc) {
+                toc.hide();
+                tocAffix.show();
+            } else {
+                tocAffix.hide();
+                toc.show();
+            }
+            $(document.body).scroll();
+        }
+
+        function windowResize() {
+            //toc right
+            var paddingRight = parseFloat(markdown.css('padding-right'));
+            var right = ($(window).width() - (markdown.offset().left + markdown.outerWidth() - paddingRight));
+            toc.css('right', right + 'px');
+            //affix toc left
+            var newbool;
+            var rightMargin = (markdown.parent().outerWidth() - markdown.outerWidth()) / 2;
+            //for ipad or wider device
+            if (rightMargin >= 133) {
+                newbool = true;
+                var affixLeftMargin = (tocAffix.outerWidth() - tocAffix.width()) / 2;
+                var left = markdown.offset().left + markdown.outerWidth() - affixLeftMargin;
+                tocAffix.css('left', left + 'px');
+            } else {
+                newbool = false;
+            }
+            if (newbool != enoughForAffixToc) {
+                enoughForAffixToc = newbool;
+                generateScrollspy();
+            }
+        }
+        $(window).resize(function () {
+            windowResize();
+        });
+        $(document).ready(function () {
+            windowResize();
+            generateScrollspy();
+        });
+
+        //remove hash
+        function removeHash() {
+            window.location.hash = '';
+        }
+
+        var backtotop = $('.back-to-top');
+        var gotobottom = $('.go-to-bottom');
+
+        backtotop.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToTop)
+                scrollToTop();
+            removeHash();
+        });
+        gotobottom.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            if (scrollToBottom)
+                scrollToBottom();
+            removeHash();
+        });
+
+        var toggle = $('.expand-toggle');
+        var tocExpand = false;
+
+        checkExpandToggle();
+        toggle.click(function (e) {
+            e.preventDefault();
+            e.stopPropagation();
+            tocExpand = !tocExpand;
+            checkExpandToggle();
+        })
+
+        function checkExpandToggle () {
+            var toc = $('.ui-toc-dropdown .toc');
+            var toggle = $('.expand-toggle');
+            if (!tocExpand) {
+                toc.removeClass('expand');
+                toggle.text('Expand all');
+            } else {
+                toc.addClass('expand');
+                toggle.text('Collapse all');
+            }
+        }
+
+        function scrollToTop() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: 0
+            }, 100, "linear");
+        }
+
+        function scrollToBottom() {
+            $('body, html').stop(true, true).animate({
+                scrollTop: $(document.body)[0].scrollHeight
+            }, 100, "linear");
+        }
+    </script>
+</body>
+
+</html>
