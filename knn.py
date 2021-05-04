@@ -5,14 +5,14 @@ import numpy as np
 # noinspection PyPep8Naming
 class kNN:
 
-    # TODO: code
+    # TODO: code __init__
     def __init__(self, n_neighbors):
         pass
 
-    # TODO: code
+    # TODO: code fit
     def fit(self, x_train, y_train):
         pass
 
-    # TODO: code
+    # TODO: code predict
     def predict(self, x_test):
         pass
