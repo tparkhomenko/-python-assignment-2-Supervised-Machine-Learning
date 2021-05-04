@@ -116,3 +116,7 @@ class Dataset:
 
     def get_target_values(self):  # Returns the values from all rows of the target column as a list.
         return self.get_feature_values(self.target_feature_name)
+
+    # TODO: code
+    def split_data(self):
+        pass
