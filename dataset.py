@@ -125,21 +125,20 @@ class Dataset:
 
     @staticmethod
     def _get_feature_names_without_target(feature_names, target_name):
-        list(filter(lambda name: name != target_name, feature_names))
+        return list(filter(lambda name: name != target_name, feature_names))
 
-    # TODO: code split_data+
     def split_data(self, impute_strategy=None):
-        feature_names = self._feature_names if self._features_to_use_for_classification == "all" else self._features_to_use_for_classification
+        feature_names = self._feature_names if self._features_to_use_for_classification[0] == "all" else self._features_to_use_for_classification
 
         validated_feature_names = self._get_feature_names_without_target(feature_names, self._target_feature_name)
         validated_feature_names.append(self._target_feature_name)
 
-        values = np.array(self.get_feature_values(validated_feature_names))
+        values = np.array(self.get_feature_values(*validated_feature_names))
         if impute_strategy is not None:
             imp_mean = SimpleImputer(strategy=impute_strategy)
             values = imp_mean.fit(values)
 
-        feature_values = values[:-1]
+        feature_values = values[:-1].transpose()
         target_values = values[-1]
 
         features_train, features_test, target_train, target_test = train_test_split(
