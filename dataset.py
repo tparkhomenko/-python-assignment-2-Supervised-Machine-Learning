@@ -118,5 +118,5 @@ class Dataset:
         return self.get_feature_values(self.target_feature_name)
 
     # TODO: code split_data
-    def split_data(self):
+    def split_data(self, impute_strategy):
         pass
