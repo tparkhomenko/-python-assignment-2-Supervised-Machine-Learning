@@ -7,6 +7,9 @@
 ################################################################################
 import csv
 import pandas as pd
+import numpy as np
+from sklearn.impute import SimpleImputer
+from sklearn.model_selection import train_test_split
 import json
 
 from os import listdir
@@ -70,6 +73,9 @@ class Dataset:
         self._target_feature_name = config_info_dict['target_feature']
         self._feature_names = list(config_info_dict['plot_types'].keys())
         self._na_characters = config_info_dict['na_characters']
+        self._random_state_for_split = config_info_dict['random_state_for_split']
+        self._test_size = config_info_dict['test_size']  # 0..1
+        self._features_to_use_for_classification = config_info_dict['features_to_use_for_classification']
 
         self._data = Dataset._read_data(config_info_dict, self.feature_names)
 
@@ -117,6 +123,30 @@ class Dataset:
     def get_target_values(self):  # Returns the values from all rows of the target column as a list.
         return self.get_feature_values(self.target_feature_name)
 
-    # TODO: code split_data
-    def split_data(self, impute_strategy):
-        pass
+    @staticmethod
+    def _get_feature_names_without_target(feature_names, target_name):
+        list(filter(lambda name: name != target_name, feature_names))
+
+    # TODO: code split_data+
+    def split_data(self, impute_strategy=None):
+        feature_names = self._feature_names if self._features_to_use_for_classification == "all" else self._features_to_use_for_classification
+
+        validated_feature_names = self._get_feature_names_without_target(feature_names, self._target_feature_name)
+        validated_feature_names.append(self._target_feature_name)
+
+        values = np.array(self.get_feature_values(validated_feature_names))
+        if impute_strategy is not None:
+            imp_mean = SimpleImputer(strategy=impute_strategy)
+            values = imp_mean.fit(values)
+
+        feature_values = values[:-1]
+        target_values = values[-1]
+
+        features_train, features_test, target_train, target_test = train_test_split(
+            feature_values,
+            target_values,
+            test_size=self._test_size,
+            random_state=self._random_state_for_split
+        )
+
+        return features_train, target_train, features_test, target_test
