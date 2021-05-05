@@ -136,7 +136,7 @@ class Dataset:
         values = np.array(self.get_feature_values(*validated_feature_names))
         if impute_strategy is not None:
             imp_mean = SimpleImputer(strategy=impute_strategy)
-            values = imp_mean.fit(values)
+            values = imp_mean.fit_transform(values)
 
         feature_values = values[:-1].transpose()
         target_values = values[-1]
