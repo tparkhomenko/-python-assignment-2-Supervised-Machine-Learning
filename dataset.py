@@ -139,7 +139,7 @@ class Dataset:
             values = imp_mean.fit_transform(values)
 
         feature_values = values[:-1].transpose()
-        target_values = values[-1]
+        target_values = np.array(values[-1], dtype=int)
 
         features_train, features_test, target_train, target_test = train_test_split(
             feature_values,

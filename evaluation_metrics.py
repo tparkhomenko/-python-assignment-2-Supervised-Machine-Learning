@@ -62,10 +62,9 @@ class EvaluationMetrics:
     def F1(self):
         return self._mock_result
 
-    # TODO: code getter accuracy_score
     @property
     def accuracy_score(self):
-        return 0.99
+        return float(np.sum(self.TP)) / np.sum(self._matrix)
 
     @staticmethod
     def _get_numpy_str(np_list):
