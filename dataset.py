@@ -133,7 +133,7 @@ class Dataset:
         validated_feature_names = self._get_feature_names_without_target(feature_names, self._target_feature_name)
         validated_feature_names.append(self._target_feature_name)
 
-        values = np.array(self.get_feature_values(*validated_feature_names))
+        values = np.array(self.get_feature_values(*validated_feature_names, remove_missing=impute_strategy is None))
         if impute_strategy is not None:
             imp_mean = SimpleImputer(strategy=impute_strategy)
             values = imp_mean.fit_transform(values)

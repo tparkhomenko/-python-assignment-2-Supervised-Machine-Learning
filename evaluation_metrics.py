@@ -8,11 +8,20 @@ class EvaluationMetrics:
     def __init__(self, y_true, y_pred):
         self._y_true = y_true
         self._y_pred = y_pred
+        self._matrix = self.confusion_matrix
 
-    # TODO: code getter confusion_matrix
+    @staticmethod
+    def _unique_values(y_true, y_pred):
+        return sorted(list(set(np.concatenate((y_true, y_pred)))))
+
     @property
     def confusion_matrix(self):
-        return np.array([[0, 0], [1, 1]])
+        y_true, y_pred = self._y_true, self._y_pred
+        uniq = EvaluationMetrics._unique_values(y_true, y_pred)
+        matrix = np.zeros((len(uniq), len(uniq)), dtype=int)
+        for i in range(0, len(y_true)):
+            matrix[y_pred[i], y_true[i]] += 1
+        return matrix
 
     # TODO: code getter FP
     # noinspection PyPep8Naming
@@ -26,11 +35,10 @@ class EvaluationMetrics:
     def FN(self):
         return self._mock_result
 
-    # TODO: code getter TP
     # noinspection PyPep8Naming
     @property
     def TP(self):
-        return self._mock_result
+        return np.diag(self._matrix)
 
     # TODO: code getter TN
     # noinspection PyPep8Naming
@@ -70,7 +78,6 @@ class EvaluationMetrics:
                 result_str += " " * (30 - len(temp_str))
         return result_str
 
-    # TODO: code __str__
     def __str__(self):
         return f"""
 Evaluation Summary:
