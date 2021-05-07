@@ -71,7 +71,7 @@ class Dataset:
         self._name = config_info_dict['dataset_name']
         self._column_info = Dataset._read_json_column_info(config_info_dict)
         self._target_feature_name = config_info_dict['target_feature']
-        self._feature_names = list(config_info_dict['plot_types'].keys())
+        self._feature_names = list(self._column_info.keys())
         self._na_characters = config_info_dict['na_characters']
         self._random_state_for_split = config_info_dict['random_state_for_split']
         self._test_size = config_info_dict['test_size']  # 0..1
@@ -106,7 +106,7 @@ class Dataset:
                f'Number of features: {len(self.feature_names)}, number of rows: {len(self._data.index)}'
 
     def write_data_to_file(self, output_file):  # writes the data to a .csv file (without column headers/names)
-        self._data.to_csv(output_file, index=False, index_label=False, na_rep=self._na_characters)
+        self._data.to_csv(output_file, index=False, index_label=False, na_rep=self._na_characters[0])
 
     def get_feature_values(self, *feature_names,
                            remove_missing=False):  # Returns the values from the requested feature(s)
