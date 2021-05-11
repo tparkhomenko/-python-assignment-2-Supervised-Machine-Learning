@@ -26,8 +26,12 @@ class EvaluationMetrics:
 
     # noinspection PyPep8Naming
     @property
-    def FP(self):
-        return self._mock_result
+    def FN(self):
+        sum_columns = []
+        # test[1,:]
+        for class_i in self._uniq:
+            sum_columns.append(np.sum(self._matrix[class_i, :]) - self.TP[class_i])
+        return sum_columns
 
     # noinspection PyPep8Naming
     @property
