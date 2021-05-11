@@ -24,28 +24,32 @@ class EvaluationMetrics:
             matrix[y_true[i], y_pred[i]] += 1
         return matrix
 
-    # TODO: code getter FP
     # noinspection PyPep8Naming
     @property
     def FP(self):
         return self._mock_result
 
-    # TODO: code getter FN
     # noinspection PyPep8Naming
     @property
-    def FN(self):
-        return self._mock_result
+    def FP(self):
+        sum_rows = []
+        # test[1,:]
+        for class_i in self._uniq:
+            sum_rows.append(np.sum(self._matrix[:, class_i]) - self.TP[class_i])
+        return sum_rows
 
     # noinspection PyPep8Naming
     @property
     def TP(self):
         return [self._matrix[class_i, class_i] for class_i in self._uniq]
 
-    # TODO: code getter TN
     # noinspection PyPep8Naming
     @property
     def TN(self):
-        return [self._diag_sum - self._matrix[class_i, class_i] for class_i in self._uniq]
+        sum_tn = []
+        for class_i in self._uniq:
+            sum_tn.append(np.sum(self._matrix) - self.TP[class_i] - self.FP[class_i] - self.FN[class_i])
+        return sum_tn
 
     # TODO: code getter precision
     @property
