@@ -1,4 +1,5 @@
 from evaluation_metrics import EvaluationMetrics
+from sklearn.metrics import plot_confusion_matrix
 
 
 class DataPredictor:
@@ -30,4 +31,4 @@ class DataPredictor:
 
     # TODO: code visualize_classification_results
     def visualize_classification_results(self):
-        pass
+        plot_confusion_matrix(self._classifier_results[-1]['fitted'], self._features_test, self._target_test)

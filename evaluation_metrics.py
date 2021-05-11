@@ -8,7 +8,9 @@ class EvaluationMetrics:
     def __init__(self, y_true, y_pred):
         self._y_true = y_true
         self._y_pred = y_pred
+        self._uniq = EvaluationMetrics._unique_values(y_true, y_pred)
         self._matrix = self.confusion_matrix
+        self._diag_sum = np.sum(np.diag(self._matrix))
 
     @staticmethod
     def _unique_values(y_true, y_pred):
@@ -17,10 +19,9 @@ class EvaluationMetrics:
     @property
     def confusion_matrix(self):
         y_true, y_pred = self._y_true, self._y_pred
-        uniq = EvaluationMetrics._unique_values(y_true, y_pred)
-        matrix = np.zeros((len(uniq), len(uniq)), dtype=int)
+        matrix = np.zeros((len(self._uniq), len(self._uniq)), dtype=int)
         for i in range(0, len(y_true)):
-            matrix[y_pred[i], y_true[i]] += 1
+            matrix[y_true[i], y_pred[i]] += 1
         return matrix
 
     # TODO: code getter FP
@@ -38,13 +39,13 @@ class EvaluationMetrics:
     # noinspection PyPep8Naming
     @property
     def TP(self):
-        return np.diag(self._matrix)
+        return [self._matrix[class_i, class_i] for class_i in self._uniq]
 
     # TODO: code getter TN
     # noinspection PyPep8Naming
     @property
     def TN(self):
-        return self._mock_result
+        return [self._diag_sum - self._matrix[class_i, class_i] for class_i in self._uniq]
 
     # TODO: code getter precision
     @property
