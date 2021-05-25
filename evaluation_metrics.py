@@ -4,7 +4,6 @@ import numpy as np
 class EvaluationMetrics:
     _mock_result = np.array([0, 0])
 
-    # TODO: code __init__
     def __init__(self, y_true, y_pred):
         self._y_true = y_true
         self._y_pred = y_pred
@@ -55,17 +54,14 @@ class EvaluationMetrics:
             sum_tn.append(np.sum(self._matrix) - self.TP[class_i] - self.FP[class_i] - self.FN[class_i])
         return np.array(sum_tn)
 
-    # TODO: code getter precision
     @property
     def precision(self):
         return self.TP/(self.TP+self.FP)
 
-    # TODO: code getter recall
     @property
     def recall(self):
         return self.TP/(self.TP+self.FN)
 
-    # TODO: code getter F1
     # noinspection PyPep8Naming
     @property
     def F1(self): # need to be optimized

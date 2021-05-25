@@ -54,7 +54,7 @@ class Plotter(ABC):
         return values_by_target, labels_by_target
 
 
-class BarPlotter(Plotter):
+class (Plotter):
     _caption = "bar"
 
     @staticmethod

@@ -1,6 +1,6 @@
 from evaluation_metrics import EvaluationMetrics
 from sklearn.metrics import plot_confusion_matrix
-
+import matplotlib.pyplot as plt
 
 class DataPredictor:
 
@@ -29,6 +29,21 @@ class DataPredictor:
     def print_evaluation_results(self):
         print(self._classifier_results[-1]['metrics'])
 
-    # TODO: code visualize_classification_results
     def visualize_classification_results(self):
-        plot_confusion_matrix(self._classifier_results[-1]['fitted'], self._features_test, self._target_test)
+        path = self._config_info_dict['classification_output_folder']
+        p1 = plot_confusion_matrix(self._classifier_results[-1]['fitted'], self._features_test, self._target_test)
+        plt.savefig(path + '/confusion_matrices.png')
+        accuracy = []
+        classifiers = []
+        for i in self._classifier_results:
+            accuracy.append(i['metrics'].accuracy_score)
+            classifiers.append(str(type(i['fitted']).__name__))
+        print(accuracy)
+        print(classifiers)
+        P2 = plt.figure()
+        ax = P2.add_axes([0, 0, 1, 1])
+        ax.bar(classifiers, accuracy)
+        plt.xticks(classifiers)
+        plt.yticks(accuracy)
+        plt.savefig(path + '/accuracy_comparison.png')
+        plt.show()
