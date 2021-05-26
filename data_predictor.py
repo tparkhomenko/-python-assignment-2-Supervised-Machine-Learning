@@ -1,6 +1,9 @@
+import numpy as np
+
 from evaluation_metrics import EvaluationMetrics
-from sklearn.metrics import plot_confusion_matrix
+from sklearn.metrics import ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
+
 
 class DataPredictor:
 
@@ -29,21 +32,48 @@ class DataPredictor:
     def print_evaluation_results(self):
         print(self._classifier_results[-1]['metrics'])
 
+    @staticmethod
+    def _unique_values(y_true, y_pred):
+        return sorted(list(set(np.concatenate((y_true, y_pred)))))
+
+    @staticmethod
+    def _get_classifier_name(classifier):
+        return type(classifier).__name__
+
+    @classmethod
+    def _draw_confusion_matrix(cls, true_target, classifier_result, ax):
+        matrix = classifier_result['metrics'].confusion_matrix
+        display_labels = cls._unique_values(true_target, classifier_result['target_predicted'])
+        drawing = ConfusionMatrixDisplay(confusion_matrix=matrix,display_labels=display_labels)
+        return drawing.plot(ax=ax)
+
+    @classmethod
+    def _draw_accuracies(cls, results, file_name):
+        accuracies = []
+        classifiers = []
+        for result in results:
+            accuracies.append(result['metrics'].accuracy_score)
+            classifiers.append(cls._get_classifier_name(result['fitted']))
+
+        fig, ax = plt.subplots()
+        ax.bar(classifiers, accuracies)
+        plt.savefig(file_name)
+
+    @classmethod
+    def _draw_chart_by_result(cls, true_target, results, drawer, file_path):
+        classifiers_len = len(results)
+
+        fig, axes = plt.subplots(nrows=1, ncols=classifiers_len)
+        fig.set_size_inches(3 * classifiers_len, 3)
+        for i in range(classifiers_len):
+            result = results[i]
+            drawer(true_target, result, axes[i])
+            axes[i].set_title(cls._get_classifier_name(result['fitted']))
+            fig.tight_layout()
+        plt.savefig(file_path)
+
     def visualize_classification_results(self):
         path = self._config_info_dict['classification_output_folder']
-        p1 = plot_confusion_matrix(self._classifier_results[-1]['fitted'], self._features_test, self._target_test)
-        plt.savefig(path + '/confusion_matrices.png')
-        accuracy = []
-        classifiers = []
-        for i in self._classifier_results:
-            accuracy.append(i['metrics'].accuracy_score)
-            classifiers.append(str(type(i['fitted']).__name__))
-        print(accuracy)
-        print(classifiers)
-        P2 = plt.figure()
-        ax = P2.add_axes([0, 0, 1, 1])
-        ax.bar(classifiers, accuracy)
-        plt.xticks(classifiers)
-        plt.yticks(accuracy)
-        plt.savefig(path + '/accuracy_comparison.png')
-        plt.show()
+        self._draw_chart_by_result(self._target_test, self._classifier_results, self._draw_confusion_matrix,
+                                   path + '/confusion_matrices.png')
+        self._draw_accuracies(self._classifier_results, path + '/accuracy_comparison.png')
