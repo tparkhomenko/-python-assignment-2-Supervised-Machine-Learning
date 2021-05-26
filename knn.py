@@ -29,15 +29,24 @@ class kNN:
     def _cosdistance(a_point, b_point):
         return 1 - np.dot(a_point, b_point) / (np.linalg.norm(a_point) * np.linalg.norm(b_point))
 
+    @staticmethod
+    def _chebdistance(a_point, b_point):
+        return np.abs(a_point - b_point).max()
+        #return np.linalg.norm(a_point-b_point, ord=np.inf)
+
+    @staticmethod
+    def _mandistance(a_point, b_point):
+        return np.sum(np.abs(a_point - b_point))
+        #return np.linalg.norm(a_point - b_point,ord=1)
 
     @staticmethod
     def _onepoint(x_testpoint, X_train, metric):
 
         dict = {
             'cosine': kNN._cosdistance,
-            #'chebyshev':
+            'chebyshev': kNN._chebdistance,
             'euclidean': kNN._edistance,
-            #'manhattan':kNN._cosdistance,
+            'manhattan': kNN._mandistance,
         }
 
         dists = np.zeros([len(X_train)])
