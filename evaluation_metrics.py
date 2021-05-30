@@ -56,16 +56,16 @@ class EvaluationMetrics:
 
     @property
     def precision(self):
-        return self.TP/(self.TP+self.FP)
+        return self.TP / (self.TP + self.FP)
 
     @property
     def recall(self):
-        return self.TP/(self.TP+self.FN)
+        return self.TP / (self.TP + self.FN)
 
     # noinspection PyPep8Naming
     @property
-    def F1(self): # need to be optimized
-        return 2 * self.precision * self.recall/(self.precision + self.recall)
+    def F1(self):  # need to be optimized
+        return 2 * self.precision * self.recall / (self.precision + self.recall)
 
     @property
     def accuracy_score(self):
@@ -83,21 +83,20 @@ class EvaluationMetrics:
         return result_str
 
     def __str__(self):
-        return f"""
-Evaluation Summary:
-    Accuracy: {self.accuracy_score}
-    Precision:
-        {EvaluationMetrics._get_numpy_str(self.precision)}			
-    Recall:
-        {EvaluationMetrics._get_numpy_str(self.recall)}			
-    F1 Score:
-        {EvaluationMetrics._get_numpy_str(self.F1)}				
-    True Positives:
-        {EvaluationMetrics._get_numpy_str(self.TP)}				
-    True Negatives:
-        {EvaluationMetrics._get_numpy_str(self.TN)}				
-    False Positives:
-        {EvaluationMetrics._get_numpy_str(self.FP)}		
-    False Negatives:
-        {EvaluationMetrics._get_numpy_str(self.FN)}	
+        return f"""Evaluation Summary:
+\tAccuracy: {self.accuracy_score}
+\tPrecision:
+\t\t{EvaluationMetrics._get_numpy_str(self.precision)}			
+\tRecall:
+\t\t{EvaluationMetrics._get_numpy_str(self.recall)}			
+\tF1 Score:
+\t\t{EvaluationMetrics._get_numpy_str(self.F1)}				
+\tTrue Positives:
+\t\t{EvaluationMetrics._get_numpy_str(self.TP)}				
+\tTrue Negatives:
+\t\t{EvaluationMetrics._get_numpy_str(self.TN)}				
+\tFalse Positives:
+\t\t{EvaluationMetrics._get_numpy_str(self.FP)}		
+\tFalse Negatives:
+\t\t{EvaluationMetrics._get_numpy_str(self.FN)}	
 """

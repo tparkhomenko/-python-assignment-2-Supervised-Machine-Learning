@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 
 
 class DataPredictor:
+    _best = 0
 
     def __init__(self, dataset, config_info_dict):
         self._dataset = dataset
@@ -18,19 +19,24 @@ class DataPredictor:
     def best_classifier(self, classifiers):
         classifier_results = []
         for classifier in classifiers:
-            fitted = classifier.fit(self._features_train, self._target_train)
-            target_predicted = fitted.predict(self._features_test)
+            classifier.fit(self._features_train, self._target_train)
+            target_predicted = classifier.predict(self._features_test)
             metrics = EvaluationMetrics(self._target_test, target_predicted)
             classifier_results.append({
-                'fitted': fitted, 'target_predicted': target_predicted, 'metrics': metrics
+                'fitted': classifier, 'target_predicted': target_predicted, 'metrics': metrics
             })
 
-        classifier_results.sort(key=lambda result: result['metrics'].accuracy_score)
+        classifier_results.sort(key=lambda result: result['metrics'].accuracy_score, reverse=True)
         self._classifier_results = classifier_results
-        return classifier_results[-1]['fitted']
+        return classifier_results[self._best]['fitted']
 
     def print_evaluation_results(self):
-        print(self._classifier_results[-1]['metrics'])
+        print('Classifiers Ranked by Accuracy:')
+        for result in self._classifier_results:
+            print('\t' + str(result['fitted']) + ' Accuracy Score: ' + str(result['metrics'].accuracy_score))
+        print('Detailed info on the best classifier' + ' ' + str(
+            self._classifier_results[self._best]['fitted']) + ': ' + '\n'
+              + str(self._classifier_results[self._best]['metrics']))
 
     @staticmethod
     def _unique_values(y_true, y_pred):
@@ -44,7 +50,7 @@ class DataPredictor:
     def _draw_confusion_matrix(cls, true_target, classifier_result, ax):
         matrix = classifier_result['metrics'].confusion_matrix
         display_labels = cls._unique_values(true_target, classifier_result['target_predicted'])
-        drawing = ConfusionMatrixDisplay(confusion_matrix=matrix,display_labels=display_labels)
+        drawing = ConfusionMatrixDisplay(confusion_matrix=matrix, display_labels=display_labels)
         return drawing.plot(ax=ax)
 
     @classmethod
@@ -53,9 +59,10 @@ class DataPredictor:
         classifiers = []
         for result in results:
             accuracies.append(result['metrics'].accuracy_score)
-            classifiers.append(cls._get_classifier_name(result['fitted']))
+            classifiers.append(str(result['fitted']))
 
         fig, ax = plt.subplots()
+        fig.set_size_inches(4 * len(classifiers), 3)
         ax.bar(classifiers, accuracies)
         plt.savefig(file_name)
 
@@ -64,11 +71,11 @@ class DataPredictor:
         classifiers_len = len(results)
 
         fig, axes = plt.subplots(nrows=1, ncols=classifiers_len)
-        fig.set_size_inches(3 * classifiers_len, 3)
+        fig.set_size_inches(4 * classifiers_len, 3)
         for i in range(classifiers_len):
             result = results[i]
             drawer(true_target, result, axes[i])
-            axes[i].set_title(cls._get_classifier_name(result['fitted']))
+            axes[i].set_title(str(result['fitted']))
             fig.tight_layout()
         plt.savefig(file_path)
 

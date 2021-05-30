@@ -128,7 +128,8 @@ class Dataset:
         return list(filter(lambda name: name != target_name, feature_names))
 
     def split_data(self, impute_strategy=None):
-        feature_names = self._feature_names if self._features_to_use_for_classification[0] == "all" else self._features_to_use_for_classification
+        feature_names = self._feature_names if self._features_to_use_for_classification[
+                                                   0] == "all" else self._features_to_use_for_classification
 
         validated_feature_names = self._get_feature_names_without_target(feature_names, self._target_feature_name)
         validated_feature_names.append(self._target_feature_name)
