@@ -33,7 +33,7 @@ class DataPredictor:
     def print_evaluation_results(self):
         print('Classifiers Ranked by Accuracy:')
         for result in self._classifier_results:
-            print('\t' + str(result['fitted']) + ' Accuracy Score: ' + str(result['metrics'].accuracy_score))
+            print('\t' + str(result['fitted']) + ' Accuracy Score: ' + str(round(result['metrics'].accuracy_score, 2)))
         print('Detailed info on the best classifier' + ' ' + str(
             self._classifier_results[self._best]['fitted']) + ': ' + '\n'
               + str(self._classifier_results[self._best]['metrics']))

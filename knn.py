@@ -10,7 +10,7 @@ class kNN:
         self._metric = metric
 
     def __str__(self):
-        return 'kNN(neighbors=' + str(self.n_neighbors) + ')'
+        return 'kNN(n_neighbors=' + str(self.n_neighbors) + ')'
 
     def fit(self, X_train, y_train):
         self._X_train = X_train

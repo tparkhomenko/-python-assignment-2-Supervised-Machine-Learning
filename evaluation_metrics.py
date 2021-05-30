@@ -73,18 +73,12 @@ class EvaluationMetrics:
 
     @staticmethod
     def _get_numpy_str(np_list):
-        result_str = ""
         size = len(np_list)
-        for i in range(size):
-            temp_str = f"Class {i}: {np_list[i]}"
-            result_str += temp_str
-            if i != size - 1:
-                result_str += " " * (30 - len(temp_str))
-        return result_str
+        return "\t\t\t".join([f"Class {i}: {str(round(np_list[i], 2))}" for i in range(size)])
 
     def __str__(self):
         return f"""Evaluation Summary:
-\tAccuracy: {self.accuracy_score}
+\tAccuracy: {round(self.accuracy_score, 2)}
 \tPrecision:
 \t\t{EvaluationMetrics._get_numpy_str(self.precision)}			
 \tRecall:
