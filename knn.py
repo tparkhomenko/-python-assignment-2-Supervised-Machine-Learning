@@ -55,7 +55,7 @@ class kNN:
             dists[n] = dict[metric](x_testpoint, X_train[n])
         return dists.argsort()  # points indexes of sorted distances
 
-    def _point_predict(self, x_testpoint):  # return which feature, when tey are equal?
+    def _point_predict(self, x_testpoint):  # return which feature, when they are equal?
         order = kNN._onepoint(x_testpoint, self._X_train, self._metric)[0:self.n_neighbors]
         nearest_k_y = self._y_train[order]
         return np.argmax(np.bincount(nearest_k_y))

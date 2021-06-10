@@ -148,7 +148,7 @@ class Dataset:
             feature_values,
             target_values,
             test_size=self._test_size,
-            random_state=self._random_state_for_split
+        random_state=self._random_state_for_split
         )
 
         return features_train, target_train, features_test, target_test
