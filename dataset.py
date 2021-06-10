@@ -127,15 +127,15 @@ class Dataset:
     def _get_feature_names_without_target(feature_names, target_name):
         return list(filter(lambda name: name != target_name, feature_names))
 
-    def split_data(self, impute_strategy=None):
+    def split_data(self, impute_strategy=None):  # for learning
         feature_names = self._feature_names if self._features_to_use_for_classification[
                                                    0] == "all" else self._features_to_use_for_classification
 
         validated_feature_names = self._get_feature_names_without_target(feature_names, self._target_feature_name)
         validated_feature_names.append(self._target_feature_name)
 
-        values = np.array(self.get_feature_values(*validated_feature_names, remove_missing=impute_strategy is None))
-        values = np.rot90(values, 3)
+        values = np.array(self.get_feature_values(*validated_feature_names, remove_missing=impute_strategy is None))  # * расписывает через ' , '
+        values = np.rot90(values, 3)  # заполняет по колонкам, а надо по строчкам
         if impute_strategy is not None:
             imp_mean = SimpleImputer(strategy=impute_strategy)
             values = imp_mean.fit_transform(values)

@@ -12,7 +12,7 @@ class kNN:
     def __str__(self):
         return 'kNN(n_neighbors=' + str(self.n_neighbors) + ')'
 
-    def fit(self, X_train, y_train):
+    def fit(self, X_train, y_train):   # no math for knn, since do not need to be learned
         self._X_train = X_train
         self._y_train = y_train
 
@@ -55,7 +55,15 @@ class kNN:
             dists[n] = dict[metric](x_testpoint, X_train[n])
         return dists.argsort()  # points indexes of sorted distances
 
-    def _point_predict(self, x_testpoint):  # return which feature, when they are equal?
-        order = kNN._onepoint(x_testpoint, self._X_train, self._metric)[0:self.n_neighbors]
+    def _point_predict(self, x_testpoint):  # return which feature, when they are equal? randome?
+        order = kNN._onepoint(x_testpoint, self._X_train, self._metric)[0:self.n_neighbors]  # first n neigbours fromm all distances
         nearest_k_y = self._y_train[order]
-        return np.argmax(np.bincount(nearest_k_y))
+        return np.argmax(np.bincount(nearest_k_y))  # 1 1 0 0 3 returns 0
+
+#bc = np.bincount(nearest_k_y)
+#prediction = np.argwhere(bc == np.amax(bc))
+
+#if len(prediction) != 1:
+#    prediction = prediction[np.random.randint(0,lp)]
+
+#Am Ende von der PredictFunction

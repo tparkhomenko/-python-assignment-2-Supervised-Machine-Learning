@@ -26,5 +26,5 @@
     "random_state_for_split": 42,
     "classification_output_folder": "heart_disease_plots",
     "features_to_use_for_classification": ["all"],
-    "impute_strategy": "mean" 
+    "impute_strategy": "most_frequent"
 }

@@ -16,7 +16,7 @@ class DataPredictor:
 
         self._classifier_results = []
 
-    def best_classifier(self, classifiers):
+    def best_classifier(self, classifiers):  # chooses from all clfs the best
         classifier_results = []
         for classifier in classifiers:
             classifier.fit(self._features_train, self._target_train)
@@ -26,7 +26,7 @@ class DataPredictor:
                 'fitted': classifier, 'target_predicted': target_predicted, 'metrics': metrics
             })
 
-        classifier_results.sort(key=lambda result: result['metrics'].accuracy_score, reverse=True)
+        classifier_results.sort(key=lambda result: result['metrics'].accuracy_score, reverse=True)  # sorting by accuracy score
         self._classifier_results = classifier_results
         return classifier_results[self._best]['fitted']
 

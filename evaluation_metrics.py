@@ -2,7 +2,7 @@ import numpy as np
 
 
 class EvaluationMetrics:
-    _mock_result = np.array([0, 0])
+    #_mock_result = np.array([0, 0])
 
     def __init__(self, y_true, y_pred):
         self._y_true = y_true
@@ -12,11 +12,11 @@ class EvaluationMetrics:
         self._diag_sum = np.sum(np.diag(self._matrix))
 
     @staticmethod
-    def _unique_values(y_true, y_pred):
+    def _unique_values(y_true, y_pred):  # finds unique classes, mekes set from then, gives a list back
         return sorted(list(set(np.concatenate((y_true, y_pred)))))
 
     @property
-    def confusion_matrix(self):
+    def confusion_matrix(self):  # заполняет confusion матрицу
         y_true, y_pred = self._y_true, self._y_pred
         matrix = np.zeros((len(self._uniq), len(self._uniq)), dtype=int)
         for i in range(0, len(y_true)):
@@ -68,7 +68,7 @@ class EvaluationMetrics:
         return 2 * self.precision * self.recall / (self.precision + self.recall)
 
     @property
-    def accuracy_score(self):
+    def accuracy_score(self):  # multiple calculations (-> save variables in init)
         return float(np.sum(self.TP)) / np.sum(self._matrix)
 
     @staticmethod
