@@ -1,4 +1,5 @@
-# TUGraz-INFO2-python-project: Supervised Machine Learning (Classification) and Technical Report.
+# Supervised Machine Learning (Classification) and Technical Report.
+TUGraz-INFO2-python-project
 
 Assignment 1:
 The overall goal of Assignment 1 is to practice the basics of object-oriented programming. 
