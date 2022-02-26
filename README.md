@@ -3,6 +3,7 @@
 
 Technologies used:
 - NumPy, SciPy, Pandas, scikit-learn, Matplotlib
+
 Classifiers used:
 - Dummy Classifier, Support Vestor Classifiers, Logistic Regression Classifiers, kNN
 
